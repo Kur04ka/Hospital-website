@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: app
+    image: backend:local
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+
+  db:
+    container_name: postgresql
+    restart: always
+    image: postgres:16.2
+    volumes: 
+      - /home/ivan/postgresql95/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=12345
+      - POSTGRES_DB=hospital
+    ports:
+      - 5435:5432

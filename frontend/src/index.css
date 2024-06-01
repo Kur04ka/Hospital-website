@@ -1,0 +1,58 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: 'Gilroy', sans-serif;
+    min-height: 100vh;
+    line-height: 1.5;
+    color: rgba(8, 44, 77, 1);
+}
+#root {
+    min-height: inherit;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: rgba(8, 44, 77, 1);
+}
+
+@font-face {
+    font-family: 'Gilroy Medium';
+    src: url('./utils/text_styles/medium/Gilroy-Medium.eot');
+    src: url('./utils/text_styles/medium/Gilroy-Medium.eot?#iefix') format('embedded-opentype'),
+    url('./utils/text_styles/medium/Gilroy-Medium.woff') format('woff'),
+    url('./utils/text_styles/medium/Gilroy-Medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gilroy Bold';
+    src: url('./utils/text_styles/bold/Gilroy-Bold.eot');
+    src: url('./utils/text_styles/bold/Gilroy-Bold.eot?#iefix') format('embedded-opentype'),
+    url('./utils/text_styles/bold/Gilroy-Bold.woff') format('woff'),
+    url('./utils/text_styles/bold/Gilroy-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gilroy Extra Bold';
+    src: url('./utils/text_styles/extra_bold/Gilroy-ExtraBold.eot');
+    src: url('./utils/text_styles/extra_bold/Gilroy-ExtraBold.eot?#iefix') format('embedded-opentype'),
+    url('./utils/text_styles/extra_bold/Gilroy-ExtraBold.woff') format('woff'),
+    url('./utils/text_styles/extra_bold/Gilroy-ExtraBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+

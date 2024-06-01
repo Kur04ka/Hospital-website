@@ -1,0 +1,42 @@
+---
+
+is_debug : false
+is_dev : false
+
+http : 
+  ip : 0.0.0.0
+  port : 8080
+  read_timeout : 
+  write_timeout : 
+  cors : 
+    allowed_methods : 
+    allowed_origins :
+    allow_credentials :
+    allowed_headers :
+    options_pass_through :
+    exposed_headers :
+    debug :
+
+app_config :
+  log_level : trace
+  admin_user :
+    admin_email : admin
+    admin_pwd : admin
+
+# Locally:
+# postgresql :
+#   psql_username : root
+#   psql_password : 12345
+#   psql_host : localhost
+#   psql_port : 5435
+#   psql_database : hospital
+
+# Docker: 
+postgresql :
+  psql_username : root
+  psql_password : 12345
+  psql_host : db
+  psql_port : 5432
+  psql_database : hospital
+
+---
