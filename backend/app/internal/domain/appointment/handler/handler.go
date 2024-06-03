@@ -68,6 +68,20 @@ func (h *handler) makeNewAppointment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	appointment, err := h.repository.GetAppointmentByID(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	data, err := json.Marshal(appointment)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.Write(data)
+
 	w.WriteHeader(http.StatusAccepted)
 }
 
@@ -155,6 +169,20 @@ func (h *handler) patchAppointment(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	appointment, err := h.repository.GetAppointmentByID(new_id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	data, err := json.Marshal(appointment)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.Write(data)
 
 	w.WriteHeader(http.StatusAccepted)
 }

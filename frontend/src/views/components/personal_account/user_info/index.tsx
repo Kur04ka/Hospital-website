@@ -19,7 +19,7 @@ const UserInformation = () => {
   }, []);
 
   return (
-    <Box display={'flex'} flexDirection={'column'} gap={'1rem'}>
+    <Box display={'flex'} flexDirection={'column'} gap={'1rem'} padding={'3rem'} border={'3px solid rgba(238, 243, 248, 1)'} sx={{borderRadius: '3rem'}}>
       <Typography variant="h4" sx={{ marginBottom: 4, textAlign: 'start' }}>Личные данные</Typography>
 
       <Box display={'flex'} textAlign={'center'} justifyContent={'center'} gap={'3rem'} flexDirection={'column'}>

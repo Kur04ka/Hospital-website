@@ -4,6 +4,7 @@ import Footer from '../footer';
 import ContactForm from './contact_form';
 import styles from './home.module.css';
 import { Container } from '@mui/material';
+import { Box } from '@mui/material';
 import NewsComponent from './news';
 import LeavePhoneComponent from './leave_phone_form';
 
@@ -12,19 +13,19 @@ const Home = () => {
   return (
     <>
       <Header />
-      <main className={styles.main}>
-        <Container maxWidth="xl" fixed>  
+      <Box display={'flex'} flexDirection={'column'} justifyContent={'space-between'} padding={'3%'} height={'200vh'} gap={'1rem'}>
+        <Container maxWidth="xl" fixed>
           <ContactForm />
         </Container>
 
-        <Container maxWidth="xl" fixed>  
+        <Container maxWidth="xl" fixed>
           <NewsComponent />
         </Container>
 
-        <Container maxWidth="xl" fixed>  
+        <Container maxWidth="xl" fixed>
           <LeavePhoneComponent />
         </Container>
-      </main>
+      </Box>
       <Footer />
     </>
   );

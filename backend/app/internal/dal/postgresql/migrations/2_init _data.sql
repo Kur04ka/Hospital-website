@@ -102,14 +102,12 @@ VALUES (
 -------------------------------------------- appointment --------------------------------------------
 INSERT INTO
     public.appointment (
-        patient_uuid,
         doctor_id,
         begins_at,
         ends_at,
         is_available
     )
 VALUES (
-        'f1562cd7-8b73-4821-8599-35763b8cf693',
         1,
         '2024-06-15 10:00:00',
         '2024-06-15 10:30:00',
@@ -160,14 +158,12 @@ VALUES (
 
 INSERT INTO
     public.appointment (
-        patient_uuid,
         doctor_id,
         begins_at,
         ends_at,
         is_available
     )
 VALUES (
-        'f1562cd7-8b73-4821-8599-35763b8cf693',
         1,
         '2024-06-17 10:00:00',
         '2024-06-17 10:30:00',
@@ -232,14 +228,12 @@ VALUES (
 
 INSERT INTO
     public.appointment (
-        patient_uuid,
         doctor_id,
         begins_at,
         ends_at,
         is_available
     )
 VALUES (
-        'f1562cd7-8b73-4821-8599-35763b8cf693',
         2,
         '2024-06-15 10:30:00',
         '2024-06-15 11:00:00',
@@ -290,14 +284,12 @@ VALUES (
 
 INSERT INTO
     public.appointment (
-        patient_uuid,
         doctor_id,
         begins_at,
         ends_at,
         is_available
     )
 VALUES (
-        'f1562cd7-8b73-4821-8599-35763b8cf693',
         2,
         '2024-06-19 10:30:00',
         '2024-06-19 11:00:00',
@@ -347,14 +339,12 @@ VALUES (
 
 INSERT INTO
     public.appointment (
-        patient_uuid,
         doctor_id,
         begins_at,
         ends_at,
         is_available
     )
 VALUES (
-        'f1562cd7-8b73-4821-8599-35763b8cf693',
         2,
         '2024-06-20 10:30:00',
         '2024-06-20 11:00:00',
@@ -386,6 +376,61 @@ VALUES (
         2,
         '2024-06-20 11:30:00',
         '2024-06-20 12:00:00',
+        true
+    );
+INSERT INTO
+    public.appointment (
+        doctor_id,
+        begins_at,
+        ends_at,
+        is_available
+    )
+VALUES (
+        2,
+        '2024-06-20 13:00:00',
+        '2024-06-20 13:30:00',
+        true
+    );
+
+INSERT INTO
+    public.appointment (
+        doctor_id,
+        begins_at,
+        ends_at,
+        is_available
+    )
+VALUES (
+        2,
+        '2024-06-20 13:30:00',
+        '2024-06-20 14:00:00',
+        false
+    );
+
+INSERT INTO
+    public.appointment (
+        doctor_id,
+        begins_at,
+        ends_at,
+        is_available
+    )
+VALUES (
+        2,
+        '2024-06-20 14:30:00',
+        '2024-06-20 15:00:00',
+        true
+    );
+
+INSERT INTO
+    public.appointment (
+        doctor_id,
+        begins_at,
+        ends_at,
+        is_available
+    )
+VALUES (
+        2,
+        '2024-06-20 15:30:00',
+        '2024-06-20 16:00:00',
         true
     );
 ------- news -------

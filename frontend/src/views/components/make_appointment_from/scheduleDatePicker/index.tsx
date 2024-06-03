@@ -6,6 +6,7 @@ import { Box, List, ListItem, ListItemButton, ListItemText, Typography } from '@
 import dayjs from 'dayjs';
 import { instance } from '../../../../utils/axios';
 import styles from './schedule.module.css'
+import { wrap } from 'module';
 
 interface Appointment {
     appointment_id: number;
@@ -65,12 +66,11 @@ const DoctorScheduleCalendar: React.FC<DoctorScheduleCalendarProps> = ({ doctorN
             <Calendar
                 onClickDay={onDateClick}
                 tileDisabled={({ date }) => !isDateInAppointments(date)}
-                
             />
             {selectedDate && (
-                <Box display={'flex'} flexDirection={'column'} gap={'1rem'} padding={'1rem'}>
+                <Box display={'flex'} flexDirection={'column'} gap={'1rem'} padding={'1rem'} width={'100%'}>
                     <Typography variant="h5" style={{color: 'rgba(8, 44, 77, 1)', fontFamily: 'Gilroy medium', textAlign: 'center'}}>Доступное время:</Typography>
-                    <Box display={'flex'} gap={'1rem'}>
+                    <Box display={'flex'} gap={'1rem'} flexWrap={'wrap'}>
                         {appointments
                             .filter(appointment =>
                                 new Date(appointment.begins_at).toDateString() === selectedDate.toDateString()

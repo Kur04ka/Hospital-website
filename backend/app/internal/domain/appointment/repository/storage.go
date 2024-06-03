@@ -9,4 +9,5 @@ type Repository interface {
 	GetAllArchieveAppointmentsByUUID(uuid string) ([]model.Appointment, error)
 
 	MakeAppointmentFreeByID(id int) error
+	GetAppointmentByID(id int) (model.Appointment, error)
 }

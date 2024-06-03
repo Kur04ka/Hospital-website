@@ -56,7 +56,7 @@ var once sync.Once
 func GetConfig() *Config {
 	once.Do(func() {
 		instance = &Config{}
-		if err := cleanenv.ReadConfig(pathToConfigLocal, instance); err != nil {
+		if err := cleanenv.ReadConfig(pathToConfigWithDocker, instance); err != nil {
 			helpText := "Error occured while reading config"
 			help, _ := cleanenv.GetDescription(instance, &helpText)
 			log.Info(help)

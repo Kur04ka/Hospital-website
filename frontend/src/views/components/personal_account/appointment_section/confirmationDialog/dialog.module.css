@@ -1,0 +1,6 @@
+.button.button {
+    display: flex;
+    padding: 0.5rem 1rem;
+    border-radius: 1.5rem;
+    font-family: inherit;
+}

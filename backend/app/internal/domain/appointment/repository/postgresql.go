@@ -124,6 +124,7 @@ func (repo *appointmentRepository) GetAllCurrentAppointmentsByUUID(uuid string) 
 		From(postgresql.AppointmentDetailsView).
 		Where(sq.Eq{"patient_uuid": uuid}).
 		Where(sq.GtOrEq{"begins_at": time}).
+		OrderBy("begins_at").
 		ToSql()
 	if err != nil {
 		err = psql.ErrCreateQuery(psql.ParsePgError(err))
@@ -176,6 +177,7 @@ func (repo *appointmentRepository) GetAllArchieveAppointmentsByUUID(uuid string)
 		From(postgresql.AppointmentDetailsView).
 		Where(sq.Eq{"patient_uuid": uuid}).
 		Where(sq.Lt{"begins_at": time}).
+		OrderBy("begins_at").
 		ToSql()
 	if err != nil {
 		err = psql.ErrCreateQuery(psql.ParsePgError(err))
@@ -240,4 +242,38 @@ func (repo *appointmentRepository) MakeAppointmentFreeByID(id int) error {
 	log.Tracef("success making appointment free with id %d", id)
 
 	return nil
+}
+
+func (repo *appointmentRepository) GetAppointmentByID(id int) (model.Appointment, error) {
+	log.Tracef("getting appointment by id: %d", id)
+
+	var appointment model.Appointment
+	sql, args, err := repo.qb.
+		Select(
+			"id",
+			"doctor_name",
+			"begins_at",
+			"ends_at",
+		).
+		From(postgresql.AppointmentDetailsView).
+		Where(sq.Eq{"id": id}).
+		ToSql()
+	if err != nil {
+		err = psql.ErrCreateQuery(psql.ParsePgError(err))
+		return model.Appointment{}, err
+	}
+
+	err = repo.client.QueryRow(context.TODO(), sql, args...).Scan(
+		&appointment.Id,
+		&appointment.DoctorName,
+		&appointment.BeginsAt,
+		&appointment.EndsAt,
+	)
+	if err != nil {
+		err = psql.ErrDoQuery(psql.ParsePgError(err))
+		return model.Appointment{}, err
+	}
+
+	log.Tracef("success getting appointment by id: %d", id)
+	return appointment, nil
 }

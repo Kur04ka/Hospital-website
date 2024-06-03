@@ -11,6 +11,7 @@ import DoctorScheduleDatePicker from './scheduleDatePicker'
 import { useState } from 'react';
 import { instance } from '../../../utils/axios';
 import styles from './form.module.css'
+import { useAppointmentStore } from '../../../data/appointment/appointmentStore';
 
 interface MakeAppointmentFormProps {
     open: boolean;
@@ -21,6 +22,8 @@ const MakeAppointmentForm: React.FC<MakeAppointmentFormProps> = ({ open, setOpen
     const [selectedSpeciality, setSelectedSpeciality] = useState<string>('');
     const [selectedDoctor, setSelectedDoctor] = useState<string>('');
     const [selectedAppointmentId, setSelectedAppointmentId] = useState<number | null>(null);
+
+    const { createAppointment } = useAppointmentStore();
 
     const handleAppointmentSelect = (appointmentId: number) => {
         setSelectedAppointmentId(appointmentId);
@@ -36,16 +39,7 @@ const MakeAppointmentForm: React.FC<MakeAppointmentFormProps> = ({ open, setOpen
     const handleSubmit = async () => {
         if (selectedAppointmentId !== null) {
             try {
-                const response = await instance.post(
-                    `/appointments/create-new-appointment/${selectedAppointmentId}`,
-                    {},
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-                        }
-                    }
-                );
-                console.log('Appointment created successfully:', response.data);
+                createAppointment(selectedAppointmentId)
                 handleClose();
             } catch (error) {
                 console.error('Error creating appointment:', error);
