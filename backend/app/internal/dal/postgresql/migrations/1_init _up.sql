@@ -1,5 +1,6 @@
 -- Active: 1717324317447@@127.0.0.1@5435@hospital
 --------------------------- Migrate UP ---------------------------
+SET TIMEZONE = 'Asia/Krasnoyarsk';
 
 CREATE TABLE IF NOT EXISTS public.users (
 	id UUID DEFAULT gen_random_uuid(),

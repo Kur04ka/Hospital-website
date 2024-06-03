@@ -2,14 +2,21 @@ import React, { useState } from 'react';
 import styles from './contact_form.module.css'
 import { Typography } from '@mui/material';
 import { Button } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import MakeAppointmentForm from '../../make_appointment_from'
 
 const ContactForm = () => {
   const [open, setOpen] = useState<boolean>(false);
+  const navigate = useNavigate()
 
   const handleClick = () => {
-    setOpen(true);
+    const jwt = localStorage.getItem('jwt')
+    if (jwt != null) {
+      setOpen(true);
+      return
+    }
+
+    navigate('/login')
   };
 
   return (
@@ -31,7 +38,7 @@ const ContactForm = () => {
       <div>
         <img src="/images/doctors.png" height={500} />
       </div>
-      
+
       <MakeAppointmentForm open={open} setOpen={setOpen} />
     </div>
   );

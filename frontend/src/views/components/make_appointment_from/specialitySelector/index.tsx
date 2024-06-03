@@ -3,52 +3,52 @@ import { instance } from '../../../../utils/axios';
 import { FormControl, InputLabel, Select, MenuItem, CircularProgress } from '@mui/material';
 
 interface SpecialitySelectorProps {
-    onSpecialityChange: (speciality: string) => void;
-  }
-  
-  const SpecialitySelector: React.FC<SpecialitySelectorProps> = ({ onSpecialityChange }) => {
-    const [specialities, setSpecialities] = useState<string[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-  
-    useEffect(() => {
-      const fetchSpecialities = async () => {
-        try {
-          const response = await instance.get('/doctors/all-specialities');
-          setSpecialities(response.data);
-          setLoading(false);
-        } catch (error) {
-          console.error('Error fetching specialities:', error);
-          setLoading(false);
-        }
-      };
-  
-      fetchSpecialities();
-    }, []);
-  
-    const handleChange = (event: any) => {
-      onSpecialityChange(event.target.value);
+  onSpecialityChange: (speciality: string) => void;
+}
+
+const SpecialitySelector: React.FC<SpecialitySelectorProps> = ({ onSpecialityChange }) => {
+  const [specialities, setSpecialities] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchSpecialities = async () => {
+      try {
+        const response = await instance.get('/doctors/all-specialities');
+        setSpecialities(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching specialities:', error);
+        setLoading(false);
+      }
     };
-  
-    return (
-      <FormControl fullWidth variant="outlined" margin="normal">
-        <InputLabel id="select-speciality-label">Speciality</InputLabel>
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          <Select
-            labelId="select-speciality-label"
-            onChange={handleChange}
-            label="Speciality"
-          >
-            {specialities.map((speciality, index) => (
-              <MenuItem key={index} value={speciality}>
-                {speciality}
-              </MenuItem>
-            ))}
-          </Select>
-        )}
-      </FormControl>
-    );
+
+    fetchSpecialities();
+  }, []);
+
+  const handleChange = (event: any) => {
+    onSpecialityChange(event.target.value);
   };
-  
-  export default SpecialitySelector;
+
+  return (
+    <FormControl fullWidth variant="outlined" sx={{color: 'rgba(8, 44, 77, 1)'}}>
+      <InputLabel style={{ fontFamily: 'Gilroy', color: 'rgba(8, 44, 77, 1)' }}>Специальность</InputLabel>
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <Select
+          onChange={handleChange}
+          label="Специальность"
+          style={{ borderRadius: '2rem', color: 'rgba(8, 44, 77, 1)', fontFamily: 'Gilroy medium' }}
+        >
+          {specialities.map((speciality, index) => (
+            <MenuItem key={index} value={speciality} style={{color: 'rgba(8, 44, 77, 1)', fontFamily: 'Gilroy medium'}}>
+              {speciality}
+            </MenuItem>
+          ))}
+        </Select>
+      )}
+    </FormControl>
+  );
+};
+
+export default SpecialitySelector;

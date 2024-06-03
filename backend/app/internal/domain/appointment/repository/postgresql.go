@@ -40,6 +40,7 @@ func (repo *appointmentRepository) GetAvailableAppointmentsByDoctorName(doctorNa
 		From(postgresql.AvailableAppointmentView).
 		Where(sq.Eq{"doctor_name": doctorName}).
 		Where(sq.GtOrEq{"begins_at": timeNow}).
+		OrderBy("begins_at").
 		ToSql()
 	if err != nil {
 		err = psql.ErrCreateQuery(psql.ParsePgError(err))

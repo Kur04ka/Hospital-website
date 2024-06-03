@@ -9,12 +9,13 @@ interface News {
     full_body: string;
     publication_date: string;
 }
-interface NewsStorage {
+
+interface NewsStore {
     news: News[];
     fetchNews: () => void;
 }
 
-export const useNewsStorage = create<NewsStorage>((set) => ({
+export const useNewsStore = create<NewsStore>((set) => ({
     news: [],
     fetchNews: async () => {
         try {     

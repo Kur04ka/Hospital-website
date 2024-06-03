@@ -12,3 +12,8 @@
     color: rgba(246, 237, 235, 1);
     font-family: Gilroy medium;
 }
+
+.company_name.company_name {
+    color: rgba(246, 237, 235, 1);
+    font-family: 'Gilroy Extra Bold'; 
+}

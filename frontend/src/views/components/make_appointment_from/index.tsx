@@ -1,8 +1,8 @@
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import DialogActions from '@mui/material/DialogActions';
+import Box from '@mui/material/Box';
 import DialogTitle from '@mui/material/DialogTitle';
 import SpecialitySelector from './specialitySelector'
 import DoctorSelector from './doctorSelector'
@@ -10,6 +10,7 @@ import React from 'react';
 import DoctorScheduleDatePicker from './scheduleDatePicker'
 import { useState } from 'react';
 import { instance } from '../../../utils/axios';
+import styles from './form.module.css'
 
 interface MakeAppointmentFormProps {
     open: boolean;
@@ -54,14 +55,19 @@ const MakeAppointmentForm: React.FC<MakeAppointmentFormProps> = ({ open, setOpen
 
     return (
         <>
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Запись на прием к врачу</DialogTitle>
+            <Dialog open={open} onClose={handleClose} PaperProps={{ style: { borderRadius: '3rem', padding: '2.5rem' } }}>
+                <DialogTitle className={styles.title}>
+                    <Typography variant="h4" gutterBottom className={styles.typography}>Записаться на прием</Typography>
+                </DialogTitle>
                 <DialogContent>
-                    <SpecialitySelector onSpecialityChange={setSelectedSpeciality} />
-                    <DoctorSelector speciality={selectedSpeciality} onDoctorChange={setSelectedDoctor} />
-                    {selectedDoctor && <DoctorScheduleDatePicker doctorName={selectedDoctor} onAppointmentSelect={handleAppointmentSelect} />}
+                    <Box display={'flex'} flexDirection={'column'} gap={'2rem'}>
+                        <SpecialitySelector onSpecialityChange={setSelectedSpeciality} />
+                        <DoctorSelector speciality={selectedSpeciality} onDoctorChange={setSelectedDoctor} />
+                        {selectedDoctor && <DoctorScheduleDatePicker doctorName={selectedDoctor} onAppointmentSelect={handleAppointmentSelect} />}
+
+                        <Button type='submit' className={styles.button} fullWidth onClick={handleSubmit} disabled={!selectedAppointmentId} variant="contained">Записаться</Button>
+                    </Box>
                 </DialogContent>
-                <Button onClick={handleSubmit} disabled={!selectedAppointmentId}>Записаться</Button>
             </Dialog>
         </>
     )

@@ -37,20 +37,20 @@ const DoctorSelector: React.FC<DoctorSelectorProps> = ({ speciality, onDoctorCha
   };
 
   return (
-    <FormControl fullWidth variant="outlined" margin="normal" disabled={!speciality}>
-      <InputLabel id="select-doctor-label">Doctor</InputLabel>
+    <FormControl fullWidth variant="outlined" disabled={!speciality} sx={{color: 'rgba(8, 44, 77, 1)'}}>
+      <InputLabel style={{ fontFamily: 'Gilroy', color: 'rgba(8, 44, 77, 1)' }}>Доктор</InputLabel>
       {loading ? (
         <CircularProgress />
       ) : (
         <Select
-          labelId="select-doctor-label"
           value={selectedDoctor}
           onChange={handleChange}
-          label="Doctor"
           disabled={!speciality}
+          label="Доктор"
+          style={{ borderRadius: '2rem', color: 'rgba(8, 44, 77, 1)', fontFamily: 'Gilroy medium' }}
         >
           {doctors.map((doctor, index) => (
-            <MenuItem key={index} value={doctor}>
+            <MenuItem key={index} value={doctor} style={{color: 'rgba(8, 44, 77, 1)', fontFamily: 'Gilroy medium'}}>
               {doctor}
             </MenuItem>
           ))}

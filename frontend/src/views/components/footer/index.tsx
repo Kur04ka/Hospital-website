@@ -11,10 +11,13 @@ const Footer = () => {
     return (
         <div className={styles.main}>
             <Box display={'flex'} justifyContent={'space-between'} textAlign={'start'} padding={'1rem'} >
-                <Box display={'flex'} alignItems={'start'} flexDirection={'column'}>
-                    <Typography variant="h4" sx={{ fontFamily: 'Gilroy Bold' }} gutterBottom>ЗАПИШИТЕСЬ НА КОНСУЛЬТАЦИЮ</Typography>
-                    <Typography variant="h6" className={styles.typography} gutterBottom>
-                        Дарим 10% скидку на следующий приём при записи<br />на бесплатную первичную консультацию с нашего сайта.
+                <Box display={'flex'} alignItems={'start'} flexDirection={'column'} gap={'2rem'}>
+                    <Box display={'flex'} textAlign={'start'} justifyContent={'center'} gap={'2rem'}>
+                        <img src="/images/logo.png" alt="logo" height='80' />
+                        <Typography variant="h4" className={styles.company_name} component="div">КЛИНИКА<br />ДОКТОРА ГОЛЬШТЕЙНА</Typography>
+                    </Box>
+                    <Typography variant="h6" style={{color: 'rgba(209, 216, 223, 1)', fontFamily: 'Gilroy medium'}} gutterBottom>
+                        Клиника с высококвалифицированными врачами, которым можно <br/>доверить свое здоровье. Ваша жизнь в наших руках!
                     </Typography>
                 </Box>
                 <Box display={'flex'} justifyContent={'space-between'} flexDirection={'column'} gap={'3rem'}>

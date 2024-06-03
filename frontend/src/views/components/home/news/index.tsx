@@ -5,7 +5,7 @@ import { Container } from '@mui/material';
 import { Box } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import styles from './news.module.css';
-import { useNewsStorage } from '../../../../data/news/newsStorage';
+import { useNewsStore } from '../../../../data/news/newsStore';
 import { formatDate } from '../../../../utils/date_parser'
 import Carousel from 'react-material-ui-carousel'
 
@@ -18,7 +18,7 @@ interface News {
 }
 
 const NewsComponent: React.FC = () => {
-    const { news, fetchNews } = useNewsStorage();
+    const { news, fetchNews } = useNewsStore();
 
     useEffect(() => {
         fetchNews();

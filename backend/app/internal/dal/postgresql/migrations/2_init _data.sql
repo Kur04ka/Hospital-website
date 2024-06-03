@@ -109,7 +109,7 @@ INSERT INTO
         is_available
     )
 VALUES (
-        '8709b243-e3db-481b-86b8-eaf90bf55bb4',
+        'f1562cd7-8b73-4821-8599-35763b8cf693',
         1,
         '2024-06-15 10:00:00',
         '2024-06-15 10:30:00',
@@ -167,10 +167,10 @@ INSERT INTO
         is_available
     )
 VALUES (
-        '8709b243-e3db-481b-86b8-eaf90bf55bb4',
+        'f1562cd7-8b73-4821-8599-35763b8cf693',
         1,
-        '2024-06-15 10:00:00',
-        '2024-06-15 10:30:00',
+        '2024-06-17 10:00:00',
+        '2024-06-17 10:30:00',
         false
     );
 
@@ -183,8 +183,8 @@ INSERT INTO
     )
 VALUES (
         1,
-        '2024-06-15 10:30:00',
-        '2024-06-15 11:00:00',
+        '2024-06-17 10:30:00',
+        '2024-06-17 11:00:00',
         true
     );
 
@@ -197,8 +197,8 @@ INSERT INTO
     )
 VALUES (
         1,
-        '2024-06-15 11:00:00',
-        '2024-06-15 11:30:00',
+        '2024-06-17 11:00:00',
+        '2024-06-17 11:30:00',
         true
     );
 
@@ -211,66 +211,8 @@ INSERT INTO
     )
 VALUES (
         1,
-        '2024-06-15 11:30:00',
-        '2024-06-15 12:00:00',
-        true
-    );
-
-INSERT INTO
-    public.appointment (
-        doctor_id,
-        begins_at,
-        ends_at,
-        is_available
-    )
-VALUES (
-        2,
-        '2024-06-15 10:00:00',
-        '2024-06-15 10:30:00',
-        true
-    );
-
-INSERT INTO
-    public.appointment (
-        patient_uuid,
-        doctor_id,
-        begins_at,
-        ends_at,
-        is_available
-    )
-VALUES (
-        '8709b243-e3db-481b-86b8-eaf90bf55bb4',
-        2,
-        '2024-06-15 10:30:00',
-        '2024-06-15 11:00:00',
-        false
-    );
-
-INSERT INTO
-    public.appointment (
-        doctor_id,
-        begins_at,
-        ends_at,
-        is_available
-    )
-VALUES (
-        2,
-        '2024-06-15 11:00:00',
-        '2024-06-15 11:30:00',
-        true
-    );
-
-INSERT INTO
-    public.appointment (
-        doctor_id,
-        begins_at,
-        ends_at,
-        is_available
-    )
-VALUES (
-        2,
-        '2024-06-15 11:30:00',
-        '2024-06-15 12:00:00',
+        '2024-06-17 11:30:00',
+        '2024-06-17 12:00:00',
         true
     );
 
@@ -297,7 +239,7 @@ INSERT INTO
         is_available
     )
 VALUES (
-        '8709b243-e3db-481b-86b8-eaf90bf55bb4',
+        'f1562cd7-8b73-4821-8599-35763b8cf693',
         2,
         '2024-06-15 10:30:00',
         '2024-06-15 11:00:00',
@@ -329,6 +271,121 @@ VALUES (
         2,
         '2024-06-15 11:30:00',
         '2024-06-15 12:00:00',
+        true
+    );
+
+INSERT INTO
+    public.appointment (
+        doctor_id,
+        begins_at,
+        ends_at,
+        is_available
+    )
+VALUES (
+        2,
+        '2024-06-19 10:00:00',
+        '2024-06-19 10:30:00',
+        true
+    );
+
+INSERT INTO
+    public.appointment (
+        patient_uuid,
+        doctor_id,
+        begins_at,
+        ends_at,
+        is_available
+    )
+VALUES (
+        'f1562cd7-8b73-4821-8599-35763b8cf693',
+        2,
+        '2024-06-19 10:30:00',
+        '2024-06-19 11:00:00',
+        false
+    );
+
+INSERT INTO
+    public.appointment (
+        doctor_id,
+        begins_at,
+        ends_at,
+        is_available
+    )
+VALUES (
+        2,
+        '2024-06-19 11:00:00',
+        '2024-06-19 11:30:00',
+        true
+    );
+
+INSERT INTO
+    public.appointment (
+        doctor_id,
+        begins_at,
+        ends_at,
+        is_available
+    )
+VALUES (
+        2,
+        '2024-06-19 11:30:00',
+        '2024-06-19 12:00:00',
+        true
+    );
+INSERT INTO
+    public.appointment (
+        doctor_id,
+        begins_at,
+        ends_at,
+        is_available
+    )
+VALUES (
+        2,
+        '2024-06-20 10:00:00',
+        '2024-06-20 10:30:00',
+        true
+    );
+
+INSERT INTO
+    public.appointment (
+        patient_uuid,
+        doctor_id,
+        begins_at,
+        ends_at,
+        is_available
+    )
+VALUES (
+        'f1562cd7-8b73-4821-8599-35763b8cf693',
+        2,
+        '2024-06-20 10:30:00',
+        '2024-06-20 11:00:00',
+        false
+    );
+
+INSERT INTO
+    public.appointment (
+        doctor_id,
+        begins_at,
+        ends_at,
+        is_available
+    )
+VALUES (
+        2,
+        '2024-06-20 11:00:00',
+        '2024-06-20 11:30:00',
+        true
+    );
+
+INSERT INTO
+    public.appointment (
+        doctor_id,
+        begins_at,
+        ends_at,
+        is_available
+    )
+VALUES (
+        2,
+        '2024-06-20 11:30:00',
+        '2024-06-20 12:00:00',
         true
     );
 ------- news -------
@@ -399,7 +456,7 @@ INSERT INTO
     )
 VALUES (
         5,
-        '8709b243-e3db-481b-86b8-eaf90bf55bb4',
+        'f1562cd7-8b73-4821-8599-35763b8cf693',
         'От всей души рекомендую эту клинику! С момента входа чувствуется забота и внимание к пациентам. Персонал вежливый и приветливый, врачи — настоящие профессионалы своего дела. Процедуры прошли быстро и безболезненно, а результаты превзошли все ожидания. Особенно понравилась чистота и современное оборудование. Спасибо за отличный сервис и заботу о здоровье пациентов! Буду рекомендовать вас всем своим знакомым!',
         '2024-05-14'
     );
@@ -413,7 +470,7 @@ INSERT INTO
     )
 VALUES (
         4,
-        '8709b243-e3db-481b-86b8-eaf90bf55bb4',
+        'f1562cd7-8b73-4821-8599-35763b8cf693',
         'Прекрасная клиника с отличным персоналом! С самого начала чувствуется профессионализм и забота. Врачи очень внимательные и компетентные, подробно объясняют каждый шаг. Процедуры проходят комфортно, без лишнего стресса. Радует современное оборудование и чистота в каждом уголке. Здесь действительно заботятся о пациентах и их здоровье. Огромное спасибо всей команде за отличный сервис! Рекомендую всем!',
         '2024-05-05'
     );
