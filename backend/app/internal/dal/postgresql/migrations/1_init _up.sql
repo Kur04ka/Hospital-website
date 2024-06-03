@@ -1,4 +1,4 @@
--- Active: 1717176991768@@127.0.0.1@5435@hospital
+-- Active: 1717324317447@@127.0.0.1@5435@hospital
 --------------------------- Migrate UP ---------------------------
 
 CREATE TABLE IF NOT EXISTS public.users (
@@ -39,8 +39,8 @@ CREATE TABLE IF NOT EXISTS public.appointment (
 	id SERIAL NOT NULL,
 	patient_uuid UUID,
 	doctor_id INT NOT NULL,
-	begins_at TIMESTAMP NOT NULL,
-	ends_at TIMESTAMP NOT NULL,
+	begins_at TIMESTAMPTZ NOT NULL,
+	ends_at TIMESTAMPTZ NOT NULL,
 	is_available BOOL DEFAULT true,
 	is_completed BOOL DEFAULT false,
 	is_expired BOOL DEFAULT false,
@@ -70,6 +70,15 @@ CREATE TABLE IF NOT EXISTS public.review (
 	CONSTRAINT valid_rating CHECK (rating > 0 AND rating <= 5),
 	CONSTRAINT fk_user_uuid FOREIGN KEY (patient_uuid) REFERENCES users(id)
 		ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS public.call_request (
+    id SERIAL PRIMARY KEY,
+    name text,
+    phone text,
+    request_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(50) DEFAULT 'pending',
+	CONSTRAINT status_check CHECK (status IN ('pending', 'completed', 'canceled'))
 );
 
 --------------------------- SELECT DATA ---------------------------

@@ -1,8 +1,14 @@
+import React from 'react';
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../hook";
 
 const PrivateRoute = () => {
-    const auth = useAuth()
+    var auth = false
+
+    const jwt = localStorage.getItem('jwt')
+    if (jwt != null) {
+        auth = true
+    }
+
     return (
         auth ? <Outlet /> : <Navigate to="/login" />
     );

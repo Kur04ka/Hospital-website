@@ -12,6 +12,8 @@ import (
 	appointmentRepository "github.com/Kur04ka/hospital/internal/domain/appointment/repository"
 	authHandler "github.com/Kur04ka/hospital/internal/domain/auth/handler"
 	authRepository "github.com/Kur04ka/hospital/internal/domain/auth/repository"
+	callRequestHandler "github.com/Kur04ka/hospital/internal/domain/call-request/handler"
+	callRequestRepository "github.com/Kur04ka/hospital/internal/domain/call-request/repository"
 	doctorHandler "github.com/Kur04ka/hospital/internal/domain/doctor/handler"
 	doctorRepository "github.com/Kur04ka/hospital/internal/domain/doctor/repository"
 	newsHandler "github.com/Kur04ka/hospital/internal/domain/news/handler"
@@ -77,6 +79,10 @@ func NewApp(cfg *config.Config) (*App, error) {
 	appointmentHandler := appointmentHandler.NewAppointmentHandler(appointmentStorage)
 	appointmentHandler.Register(router)
 
+	// Регистрация handler call-request
+	callRequestStorage := callRequestRepository.NewCallRequestRepository(client)
+	callRequestHandler := callRequestHandler.NewCallRequestHandler(callRequestStorage)
+	callRequestHandler.Register(router)
 
 	// TODO: REGISTER HANDLERS
 
@@ -118,13 +124,13 @@ func (a *App) startHTTP() error {
 		"Debug":              a.cfg.HTTP.CORS.Debug,
 	})
 	c := cors.New(cors.Options{
-		AllowedMethods:     a.cfg.HTTP.CORS.AllowedMethods,
-		AllowedOrigins:     a.cfg.HTTP.CORS.AllowedOrigins,
-		AllowCredentials:   a.cfg.HTTP.CORS.AllowCredentials,
-		AllowedHeaders:     a.cfg.HTTP.CORS.AllowedHeaders,
-		OptionsPassthrough: a.cfg.HTTP.CORS.OptionsPassthrough,
-		ExposedHeaders:     a.cfg.HTTP.CORS.ExposedHeaders,
-		Debug:              a.cfg.HTTP.CORS.Debug,
+		AllowedMethods:     []string{http.MethodGet, http.MethodPost, http.MethodPatch, http.MethodDelete},
+		AllowedOrigins:     []string{"http://localhost:3000"},
+		AllowCredentials:   true,
+		AllowedHeaders:     []string{"authorization", "content-type"},
+		OptionsPassthrough: true,
+		ExposedHeaders:     []string{},
+		Debug:              true,
 	})
 
 	handler := c.Handler(a.router)

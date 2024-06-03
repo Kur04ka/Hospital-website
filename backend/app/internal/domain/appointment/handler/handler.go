@@ -31,6 +31,7 @@ func (h *handler) Register(router *httprouter.Router) {
 }
 
 func (h *handler) getScheduleByDoctorName(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	params := httprouter.ParamsFromContext(r.Context())
 	doctorName := params.ByName("doctor-name")
 
@@ -50,6 +51,7 @@ func (h *handler) getScheduleByDoctorName(w http.ResponseWriter, r *http.Request
 }
 
 func (h *handler) makeNewAppointment(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	uuid := r.Header.Get("user_id")
 
 	params := httprouter.ParamsFromContext(r.Context())
@@ -70,6 +72,7 @@ func (h *handler) makeNewAppointment(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) getAllCurrentAppointments(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	uuid := r.Header.Get("user_id")
 
 	appointments, err := h.repository.GetAllCurrentAppointmentsByUUID(uuid)
@@ -88,6 +91,7 @@ func (h *handler) getAllCurrentAppointments(w http.ResponseWriter, r *http.Reque
 }
 
 func (h *handler) getAllArchieveAppointments(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	uuid := r.Header.Get("user_id")
 
 	appointments, err := h.repository.GetAllArchieveAppointmentsByUUID(uuid)
@@ -106,6 +110,7 @@ func (h *handler) getAllArchieveAppointments(w http.ResponseWriter, r *http.Requ
 }
 
 func (h *handler) deleteAppointment(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	params := httprouter.ParamsFromContext(r.Context())
 	appointmentID := params.ByName("appointmentID")
 
@@ -125,6 +130,7 @@ func (h *handler) deleteAppointment(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) patchAppointment(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	uuid := r.Header.Get("user_id")
 
 	old_id, err := strconv.Atoi(r.URL.Query().Get("old_id"))

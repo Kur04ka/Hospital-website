@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap: 1rem;
+}
+
+.item {
+    display: flex;
+    justify-content: left;
+}
+
+.button.button {
+    display: flex;
+    width: 300px;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    padding: 0.8rem 0.5rem;
+    border-radius: 1.5rem;
+    font-family: inherit;
+    background-color: rgba(19, 84, 147, 1);
+}

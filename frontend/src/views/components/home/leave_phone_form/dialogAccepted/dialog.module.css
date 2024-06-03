@@ -1,0 +1,10 @@
+.dialog_item {
+    text-align: center;
+}
+
+.button.button {
+    padding: 0.8rem 2rem;
+    border-radius: 1.5rem;
+    font-family: inherit;
+    background-color: rgba(19, 84, 147, 1);
+}

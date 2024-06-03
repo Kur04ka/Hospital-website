@@ -20,10 +20,6 @@ type handler struct {
 	repository repository.Repository
 }
 
-type tokenStruct struct {
-	Token string `json:"token"`
-}
-
 func NewAuthHandler(repository repository.Repository) handlers.Handler {
 	return &handler{
 		repository: repository,
@@ -38,6 +34,7 @@ func (h *handler) Register(router *httprouter.Router) {
 }
 
 func (h *handler) userDetails(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	uuid := r.Header.Get("user_id")
 
 	user, err := h.repository.GetUserDetailsByUUID(uuid)
@@ -56,6 +53,7 @@ func (h *handler) userDetails(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) verifyEmail(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	var verificationData model.VerificationData
 
 	err := json.NewDecoder(r.Body).Decode(&verificationData)
@@ -111,10 +109,7 @@ func (h *handler) compareVerificationData(actualVerificationData, verificationDa
 }
 
 func (h *handler) signUp(w http.ResponseWriter, r *http.Request) {
-	if r.Body == nil {
-		http.Error(w, "Body is empty", http.StatusBadRequest)
-		return
-	}
+	w.Header().Set("Content-Type", "application/json")
 
 	var user model.User
 	err := json.NewDecoder(r.Body).Decode(&user)
@@ -186,6 +181,7 @@ func (h *handler) signUp(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) signIn(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	var user model.User
 
 	err := json.NewDecoder(r.Body).Decode(&user)
@@ -233,10 +229,7 @@ func (h *handler) signIn(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tokenStruct := tokenStruct{
-		Token: token,
-	}
-	data, err := json.Marshal(tokenStruct)
+	data, err := json.Marshal(token)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
