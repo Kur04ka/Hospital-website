@@ -1,4 +1,4 @@
--- Active: 1717324317447@@127.0.0.1@5435@hospital
+-- Active: 1717484712618@@127.0.0.1@5435@hospital
 --------------------------- Migrate UP ---------------------------
 SET TIMEZONE = 'Asia/Krasnoyarsk';
 

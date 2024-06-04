@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
-import { FormControl } from '@mui/material';
-import { Typography } from '@mui/material';
-import { Select } from '@mui/material';
+import { Box, FormControl, Typography, Select, MenuItem, Button} from '@mui/material';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import ConfirmationDialog from './confirmationDialog'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { MenuItem } from '@mui/material';
-import { Button } from '@mui/material';
 import { useAppointmentStore } from '../../../../data/appointment/appointmentStore';
 import styles from './appointment.module.css';
 import { formatDate, formatTime } from '../../../../utils/date_parser';
 import EditDialog from './editDialog';
-import { useStaticPicker } from '@mui/x-date-pickers/internals';
+import EmptyAppointment from './emptyAppointment';
 import MakeAppointmentForm from '../../make_appointment_from';
 
 
@@ -93,7 +88,7 @@ const AppointmentSection = () => {
                 {selectedType === 'current' ? (
                     hasCurrentAppointments ? ( // Проверяем наличие текущих записей перед их отображением
                         appointments.map((appointment) => (
-                            <Box key={appointment.appointment_id} display={'flex'} justifyContent={'space-between'} borderRadius={4} padding={'1rem'} sx={{ backgroundColor: 'rgba(238, 243, 248, 1)' }}>
+                            <Box key={appointment.appointment_id} display={'flex'} justifyContent={'space-between'} padding={'1rem'} sx={{ backgroundColor: 'rgba(238, 243, 248, 1)', borderRadius: '3rem' }}>
                                 <Typography variant="h6" color={'rgba(137, 155, 181, 1)'}>
                                     {appointment.doctor_name}
                                 </Typography>
@@ -110,7 +105,7 @@ const AppointmentSection = () => {
                             </Box>
                         ))
                     ) : (
-                        <Typography variant="body1">Пока что у вас нет текущих записей</Typography>
+                        <EmptyAppointment />
                     )
                 ) : (
                     hasArchiveAppointments ? (
