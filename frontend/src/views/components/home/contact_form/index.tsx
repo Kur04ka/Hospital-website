@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './contact_form.module.css'
-import { Typography } from '@mui/material';
-import { Button } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
 import MakeAppointmentForm from '../../make_appointment_form'
 
@@ -36,7 +35,7 @@ const ContactForm = () => {
       </div>
 
       <div>
-        <img src="/images/doctors.png" height={500} />
+        <img src="/images/doctors.png" alt='doctor' height={500} />
       </div>
 
       <MakeAppointmentForm open={open} setOpen={setOpen} />

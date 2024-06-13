@@ -1,10 +1,6 @@
 import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import { NavLink, Link } from 'react-router-dom';
+import { Box, Button, Typography, Toolbar, AppBar } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 import styles from "./header.module.css";
 
 const Header: React.FC = (): JSX.Element => {

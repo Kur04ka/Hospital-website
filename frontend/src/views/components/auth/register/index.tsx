@@ -1,22 +1,15 @@
-import React, { Fragment, useState } from 'react';
-import { TextField } from '@mui/material';
-import { Button } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, Button, Typography, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { Typography } from '@mui/material';
-import { Select } from '@mui/material';
-import { InputLabel } from '@mui/material';
-import { MenuItem } from '@mui/material';
-import { FormControl } from '@mui/material';
-import { NavLink } from 'react-router-dom';
-import styles from "./register.module.css"
-import dayjs, { Dayjs } from 'dayjs';
-import { instance } from '../../../../utils/axios';
-import Header from '../../header';
-import WomanWithHeart from "../../shared/womanWithHeart"
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Dayjs } from 'dayjs';
 import { MuiTelInput } from 'mui-tel-input'
-import { useNavigate } from 'react-router-dom';
+import Header from '../../header';
+import styles from "./register.module.css"
+import { instance } from '../../../../utils/axios';
+import WomanWithHeart from "../../shared/womanWithHeart"
 
 const RegisterPage: React.FC = (): JSX.Element => {
   const [email, setEmail] = useState('')
@@ -39,15 +32,13 @@ const RegisterPage: React.FC = (): JSX.Element => {
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    setIsPasswordValid(validatePassword(newPassword));
+    setPassword(e.target.value);
+    setIsPasswordValid(validatePassword(password));
   };
 
   const handleRepeatPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newRepeatPassword = e.target.value;
-    setRepeatPassword(newRepeatPassword);
-    setIsPasswordMatch(password === newRepeatPassword);
+    setRepeatPassword(e.target.value);
+    setIsPasswordMatch(password === repeatPassword);
   };
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
@@ -68,7 +59,7 @@ const RegisterPage: React.FC = (): JSX.Element => {
       created_at,
     }
 
-    const user = await instance.post('auth/sign-up', userData)
+    await instance.post('auth/sign-up', userData)
 
     localStorage.setItem('email', email)
 

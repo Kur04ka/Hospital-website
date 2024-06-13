@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Box, FormControl, Typography, Select, MenuItem, Button } from '@mui/material';
+import { Box, FormControl, Typography, Select, MenuItem, Button, IconButton } from '@mui/material';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import IconButton from '@mui/material/IconButton';
-import ConfirmationDialog from './confirmationDialog'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { useAppointmentStore } from '../../../../data/appointment/appointmentStore';
-import styles from './appointment.module.css';
-import { formatDate, formatTime } from '../../../../utils/date_parser';
 import EditDialog from './editDialog';
+import styles from './appointment.module.css';
 import EmptyAppointment from './emptyAppointment';
+import ConfirmationDialog from './confirmationDialog'
 import MakeAppointmentForm from '../../make_appointment_form';
+import { formatDate, formatTime } from '../../../../utils/date_parser';
+import { useAppointmentStore } from '../../../../data/appointment/appointmentStore';
 
 
 const AppointmentSection = () => {
@@ -45,6 +44,7 @@ const AppointmentSection = () => {
         setMakeAppointmentOpen(true)
     }
 
+    // TODO: Разобрать с useEffect
     useEffect(() => {
         if (selectedType === 'current') {
             fetchCurrentAppointments();

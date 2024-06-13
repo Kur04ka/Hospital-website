@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from './verification.module.css'
 import Header from '../../header';
 import WomanWithHeart from "../../shared/womanWithHeart"
-import { Button } from '@mui/material';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import ReactCodeInput from 'react-verification-code-input';
 import { instance } from '../../../../utils/axios';
 

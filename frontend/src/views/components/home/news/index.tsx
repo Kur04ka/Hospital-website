@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
-import { ListItemAvatar, Typography } from '@mui/material';
-import { Button } from '@mui/material';
-import { Container } from '@mui/material';
-import { Box } from '@mui/material';
+import { Typography, Button, Container } from '@mui/material';
+import Carousel from 'react-material-ui-carousel'
 import { NavLink } from 'react-router-dom';
 import styles from './news.module.css';
 import { useNewsStore } from '../../../../data/news/newsStore';
 import { formatDate } from '../../../../utils/date_parser'
-import Carousel from 'react-material-ui-carousel'
 
 interface News {
     id: number;
@@ -36,7 +33,7 @@ const NewsComponent: React.FC = () => {
                         <Container key={index} className={styles.news__container}>
                             {pair.map(item => (
                                 <Container key={item.id} className={styles.piece_of_news}>
-                                    <img src="./images/news.png" height={230} width={'100%'}/>
+                                    <img src="./images/news.png" alt='news.png' height={230} width={'100%'}/>
                                     <div className={styles.body}>
                                         <Typography gutterBottom variant="subtitle1" sx={{ color: 'rgba(137, 155, 181, 1)' }}>{formatDate(item.publication_date)}</Typography>
                                         <Typography gutterBottom variant="h5" sx={{ color: 'rgba(8, 44, 77, 1)', fontFamily: 'Gilroy Bold' }}>{item.title}</Typography>

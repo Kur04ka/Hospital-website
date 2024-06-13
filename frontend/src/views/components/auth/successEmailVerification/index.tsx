@@ -1,9 +1,7 @@
-import React from 'react';
-import styles from './successVerification.module.css'
-import Header from '../../header';
-import { Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import { Button } from '@mui/material';
+import { Typography, Button } from '@mui/material';
+import Header from '../../header';
+import styles from './successVerification.module.css'
 
 
 const SuccessVerificationForm = () => {

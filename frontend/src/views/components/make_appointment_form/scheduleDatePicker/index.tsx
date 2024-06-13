@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { Box, ListItemButton, ListItemText, Typography } from '@mui/material';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { Box, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
-import dayjs from 'dayjs';
-import { instance } from '../../../../utils/axios';
 import styles from './schedule.module.css'
-import { wrap } from 'module';
+import { instance } from '../../../../utils/axios';
 import { formatTime } from '../../../../utils/date_parser';
-import { useAppointmentStore } from '../../../../data/appointment/appointmentStore';
 
 interface Appointment {
     appointment_id: number;

@@ -1,5 +1,5 @@
-import  styles  from './womanWithHeart.module.css';
 import React from 'react';
+import  styles  from './womanWithHeart.module.css';
 
 
 const WomenWithHeart: React.FC = (): JSX.Element => {

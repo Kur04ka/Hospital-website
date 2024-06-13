@@ -1,15 +1,10 @@
-import React, { Fragment, useState } from 'react';
-import { TextField, createTheme } from '@mui/material';
-import { Button } from '@mui/material';
-import { Typography } from '@mui/material';
-import { FormControlLabel } from '@mui/material';
-import { Checkbox } from '@mui/material';
-import { Box } from '@mui/material';
+import React, { useState } from 'react';
+import { TextField, Button, Typography, FormControlLabel, Checkbox, Box } from '@mui/material';
 import styles from "./login.module.css"
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../../header';
-import WomanWithHeart from "../../shared/womanWithHeart"
 import { instance } from '../../../../utils/axios';
+import WomanWithHeart from "../../shared/womanWithHeart"
 
 const LoginPage: React.FC = (): JSX.Element => {
   const [email, setEmail] = useState('')

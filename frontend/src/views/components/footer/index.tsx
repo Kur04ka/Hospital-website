@@ -1,11 +1,7 @@
-import React from 'react';
-import { Box, Typography, TextField, IconButton, Grid, Link } from '@mui/material';
+import { Box, Typography, IconButton } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import styles from './footer.module.css'
-import YouTubeIcon from '@mui/icons-material/YouTube';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import PinterestIcon from '@mui/icons-material/Pinterest';
-import TelegramIcon from '@mui/icons-material/Telegram';
+import { YouTube, Instagram, Pinterest, Telegram } from '@mui/icons-material';
 
 const Footer = () => {
     return (
@@ -47,10 +43,10 @@ const Footer = () => {
                     <Box display={'flex'}>
                         <Box sx={{ display: 'flex', gap: '2rem', textAlign: 'center' }}>
                             <Typography variant="h5" textAlign={'center'} fontFamily={'Gilroy'}>СОЦ. СЕТИ</Typography>
-                            <IconButton sx={{ color: 'rgba(246, 237, 235, 1)' }}><YouTubeIcon /></IconButton>
-                            <IconButton sx={{ color: 'rgba(246, 237, 235, 1)' }}><InstagramIcon /></IconButton>
-                            <IconButton sx={{ color: 'rgba(246, 237, 235, 1)' }}><PinterestIcon /></IconButton>
-                            <IconButton sx={{ color: 'rgba(246, 237, 235, 1)' }}><TelegramIcon /></IconButton>
+                            <IconButton sx={{ color: 'rgba(246, 237, 235, 1)' }}><YouTube /></IconButton>
+                            <IconButton sx={{ color: 'rgba(246, 237, 235, 1)' }}><Instagram /></IconButton>
+                            <IconButton sx={{ color: 'rgba(246, 237, 235, 1)' }}><Pinterest /></IconButton>
+                            <IconButton sx={{ color: 'rgba(246, 237, 235, 1)' }}><Telegram /></IconButton>
                         </Box>
                     </Box>
                 </Box>

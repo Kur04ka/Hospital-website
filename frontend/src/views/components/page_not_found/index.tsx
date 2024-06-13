@@ -1,8 +1,6 @@
-import React from 'react';
 import styles from './notfound.module.css'
-import { Typography } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import { NavLink } from 'react-router-dom';
-import { Button } from '@mui/material';
 
 const NotFound = () => {
     return (

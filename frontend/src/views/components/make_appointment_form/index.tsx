@@ -1,16 +1,10 @@
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import DialogTitle from '@mui/material/DialogTitle';
-import SpecialitySelector from './specialitySelector'
-import DoctorSelector from './doctorSelector'
-import React from 'react';
-import DoctorScheduleDatePicker from './scheduleDatePicker'
-import { useState } from 'react';
-import { instance } from '../../../utils/axios';
+import React, { useState } from 'react';
+import { Dialog, DialogContent } from '@material-ui/core';
+import { Typography, Button, Box, DialogTitle } from '@mui/material';
 import styles from './form.module.css'
+import DoctorSelector from './doctorSelector'
+import SpecialitySelector from './specialitySelector'
+import DoctorScheduleDatePicker from './scheduleDatePicker'
 import { useAppointmentStore } from '../../../data/appointment/appointmentStore';
 
 interface MakeAppointmentFormProps {

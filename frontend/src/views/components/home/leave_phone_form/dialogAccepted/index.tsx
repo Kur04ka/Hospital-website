@@ -1,10 +1,7 @@
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import { Typography } from '@mui/material';
-import { Button } from '@mui/material';
-import styles from './dialog.module.css'
 import React from 'react';
+import { Dialog, DialogContent, DialogContentText } from '@material-ui/core';
+import { Typography, Button } from '@mui/material';
+import styles from './dialog.module.css'
 
 
 interface DialogAcceptedProps {

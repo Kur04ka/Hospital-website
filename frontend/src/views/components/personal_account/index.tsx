@@ -1,7 +1,6 @@
-import React from 'react';
+import { Box } from '@mui/material';
 import Header from '../header';
 import Footer from '../footer';
-import { Box } from '@mui/material';
 import UserInformation from './user_info'
 import AppointmentSection from './appointment_section'
 
