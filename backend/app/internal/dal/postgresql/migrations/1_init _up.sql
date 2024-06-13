@@ -1,4 +1,4 @@
--- Active: 1717484712618@@127.0.0.1@5435@hospital
+-- Active: 1717324317447@@127.0.0.1@5435@hospital
 --------------------------- Migrate UP ---------------------------
 SET TIMEZONE = 'Asia/Krasnoyarsk';
 
@@ -12,8 +12,9 @@ CREATE TABLE IF NOT EXISTS public.users (
 	birth_date DATE NOT NULL,
 	phone_number TEXT NOT NULL,
 	created_at DATE NOT NULL,
-	is_verified BOOL DEFAULT false,
-	PRIMARY KEY (id)
+	is_verified BOOL NOT NULL DEFAULT false,
+	PRIMARY KEY (id),
+	CONSTRAINT sex_check CHECK (sex IN ('Мужчина', 'Женщина'))
 );
 
 CREATE TABLE IF NOT EXISTS public.doctor (
@@ -42,9 +43,9 @@ CREATE TABLE IF NOT EXISTS public.appointment (
 	doctor_id INT NOT NULL,
 	begins_at TIMESTAMPTZ NOT NULL,
 	ends_at TIMESTAMPTZ NOT NULL,
-	is_available BOOL DEFAULT true,
-	is_completed BOOL DEFAULT false,
-	is_expired BOOL DEFAULT false,
+	is_available BOOL NOT NULL DEFAULT true,
+	is_completed BOOL NOT NULL DEFAULT false,
+	is_expired BOOL NOT NULL DEFAULT false,
 	PRIMARY KEY (id),
 	CONSTRAINT fk_user_uuid FOREIGN KEY (patient_uuid) REFERENCES users(id)
 		ON DELETE CASCADE ON UPDATE CASCADE,
@@ -58,27 +59,34 @@ CREATE TABLE IF NOT EXISTS public.news (
 	short_body TEXT NOT NULL,
 	full_body TEXT NOT NULL,
 	publication_date DATE NOT NULL,
-	PRIMARY KEY (id)
+	doctor_id INT NOT NULL,
+	PRIMARY KEY (id),
+	CONSTRAINT fk_doctor_id FOREIGN KEY (doctor_id) REFERENCES doctor(id)
+		ON DELETE CASCADE ON UPDATE CASCADE 
 );
 
 CREATE TABLE IF NOT EXISTS public.review (
 	id SERIAL NOT NULL,
 	rating INT NOT NULL,
 	patient_uuid UUID NOT NULL,
+	doctor_id INT NOT NULL,
 	body TEXT NOT NULL,
 	publication_date DATE NOT NULL,
 	PRIMARY KEY (id),
 	CONSTRAINT valid_rating CHECK (rating > 0 AND rating <= 5),
 	CONSTRAINT fk_user_uuid FOREIGN KEY (patient_uuid) REFERENCES users(id)
+		ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_doctor_id FOREIGN KEY (doctor_id) REFERENCES doctor(id)
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+ 
 CREATE TABLE IF NOT EXISTS public.call_request (
     id SERIAL PRIMARY KEY,
-    name text,
-    phone text,
+    name text NOT NULL,
+    phone text NOT NULL,
     request_time TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    status VARCHAR(50) DEFAULT 'pending',
+    status TEXT DEFAULT 'pending',
 	CONSTRAINT status_check CHECK (status IN ('pending', 'completed', 'canceled'))
 );
 

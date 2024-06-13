@@ -7,22 +7,24 @@ import DialogTitle from '@mui/material/DialogTitle';
 import React from 'react';
 import { useState } from 'react';
 import styles from './dialog.module.css'
+import { useAppointmentStore } from '../../../../../data/appointment/appointmentStore';
 
 interface ConfirmationDialogProps {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     appointmentId: number | null;
-    removeAppointment: (appointmentId: number) => void;
 }
 
-const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ open, setOpen, appointmentId, removeAppointment }) => {
+const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ open, setOpen, appointmentId }) => {
+    const {removeCurrentAppointment} = useAppointmentStore();
+
     const handleClose = () => {
         setOpen(false);
     };
 
     const handleRemoveAppointment = () => {
         if (appointmentId !== null) {
-            removeAppointment(appointmentId);
+            removeCurrentAppointment(appointmentId);
             setOpen(false);
         }
     };

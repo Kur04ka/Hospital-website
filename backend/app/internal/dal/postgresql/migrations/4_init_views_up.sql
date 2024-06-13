@@ -1,4 +1,4 @@
--- Active: 1717484712618@@127.0.0.1@5435@hospital
+-- Active: 1717324317447@@127.0.0.1@5435@hospital
 CREATE OR REPLACE VIEW review_view AS
 	SELECT review.id, rating, concat_ws(' ', name, surname) AS user_name, body, publication_date
 	FROM review

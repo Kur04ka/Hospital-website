@@ -36,7 +36,7 @@ const NewsComponent: React.FC = () => {
                         <Container key={index} className={styles.news__container}>
                             {pair.map(item => (
                                 <Container key={item.id} className={styles.piece_of_news}>
-                                    <img src="./images/news.png" height={230} />
+                                    <img src="./images/news.png" height={230} width={'100%'}/>
                                     <div className={styles.body}>
                                         <Typography gutterBottom variant="subtitle1" sx={{ color: 'rgba(137, 155, 181, 1)' }}>{formatDate(item.publication_date)}</Typography>
                                         <Typography gutterBottom variant="h5" sx={{ color: 'rgba(8, 44, 77, 1)', fontFamily: 'Gilroy Bold' }}>{item.title}</Typography>

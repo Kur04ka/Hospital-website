@@ -7,4 +7,4 @@ DROP TABLE IF EXISTS public.doctor CASCADE;
 DROP TABLE IF EXISTS public.appointment CASCADE;
 DROP TABLE IF EXISTS public.news CASCADE;
 DROP TABLE IF EXISTS public.review CASCADE;
-DROP TABLE IF EXISTS public.call_requests CASCADE;
+DROP TABLE IF EXISTS public.call_request CASCADE;

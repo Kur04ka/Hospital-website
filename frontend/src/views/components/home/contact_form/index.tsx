@@ -3,7 +3,7 @@ import styles from './contact_form.module.css'
 import { Typography } from '@mui/material';
 import { Button } from '@mui/material';
 import { NavLink, useNavigate } from 'react-router-dom';
-import MakeAppointmentForm from '../../make_appointment_from'
+import MakeAppointmentForm from '../../make_appointment_form'
 
 const ContactForm = () => {
   const [open, setOpen] = useState<boolean>(false);

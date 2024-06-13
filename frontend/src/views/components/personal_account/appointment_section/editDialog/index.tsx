@@ -8,18 +8,19 @@ import DialogTitle from '@mui/material/DialogTitle';
 import React from 'react';
 import { useState } from 'react';
 import styles from './dialog.module.css'
-import DoctorScheduleDatePicker from '../../../make_appointment_from/scheduleDatePicker'
+import DoctorScheduleDatePicker from '../../../make_appointment_form/scheduleDatePicker'
 import { instance } from '../../../../../utils/axios';
+import { useAppointmentStore } from '../../../../../data/appointment/appointmentStore';
 
 interface ConfirmationDialogProps {
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     old_appointmentId: number;
     doctorName: string;
-    updateCurrentAppointment: (old_appointment_id: number, new_appointment_id: number) => void;
 }
 
-const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ open, setOpen, old_appointmentId, doctorName, updateCurrentAppointment }) => {
+const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ open, setOpen, old_appointmentId, doctorName }) => {
+    const {updateCurrentAppointment} = useAppointmentStore();
     const [selectedAppointmentId, setSelectedAppointmentId] = useState<number | null>(null);
 
     const handleClose = () => {

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Box, Typography, Button } from '@mui/material';
+import styles from './appointment.module.css'
 
 const EmptyAppointment = () => {
     return (
@@ -7,13 +8,7 @@ const EmptyAppointment = () => {
             <img src="./images/paper-tablet.png" alt="paper-tablet.png" height={'250px'} />
             <Box display={'flex'} flexDirection={'column'} justifyContent={'center'} gap={'1rem'}>
                 <Typography variant='h5' sx={{ color: 'rgba(137, 155, 181, 1)', fontFamily: 'Gilroy' }}>Пока что тут пусто</Typography>
-                <Button fullWidth
-                    sx={{
-                        display: 'flex', padding: '0.8rem 0.5rem', borderRadius: '1.5rem',
-                        backgroundColor: 'rgba(19, 84, 147, 1)', color: 'white', fontFamily: 'Gilroy'
-                    }}
-                >
-                    Записаться на прием</Button>
+                <Button fullWidth className={styles.button} variant='contained'>Записаться на прием</Button>
             </Box>
         </Box>
     )

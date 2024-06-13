@@ -7,6 +7,8 @@ import dayjs from 'dayjs';
 import { instance } from '../../../../utils/axios';
 import styles from './schedule.module.css'
 import { wrap } from 'module';
+import { formatTime } from '../../../../utils/date_parser';
+import { useAppointmentStore } from '../../../../data/appointment/appointmentStore';
 
 interface Appointment {
     appointment_id: number;
@@ -53,10 +55,6 @@ const DoctorScheduleCalendar: React.FC<DoctorScheduleCalendarProps> = ({ doctorN
         }
     };
 
-    const formatTime = (datetime: string): string => {
-        return dayjs(datetime).format('HH:mm');
-    };
-
     const handleAppointmentClick = (appointmentId: number) => {
         onAppointmentSelect(appointmentId);
     };
@@ -70,7 +68,7 @@ const DoctorScheduleCalendar: React.FC<DoctorScheduleCalendarProps> = ({ doctorN
             {selectedDate && (
                 <Box display={'flex'} flexDirection={'column'} gap={'1rem'} padding={'1rem'} width={'100%'}>
                     <Typography variant="h5" style={{color: 'rgba(8, 44, 77, 1)', fontFamily: 'Gilroy medium', textAlign: 'center'}}>Доступное время:</Typography>
-                    <Box display={'flex'} gap={'1rem'} flexWrap={'wrap'}>
+                    <Box display={'flex'} gap={'1rem'} justifyContent={'start'} flexWrap={'wrap'}>
                         {appointments
                             .filter(appointment =>
                                 new Date(appointment.begins_at).toDateString() === selectedDate.toDateString()

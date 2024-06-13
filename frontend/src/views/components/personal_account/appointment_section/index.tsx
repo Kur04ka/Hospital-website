@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, FormControl, Typography, Select, MenuItem, Button} from '@mui/material';
+import { Box, FormControl, Typography, Select, MenuItem, Button } from '@mui/material';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
@@ -10,7 +10,7 @@ import styles from './appointment.module.css';
 import { formatDate, formatTime } from '../../../../utils/date_parser';
 import EditDialog from './editDialog';
 import EmptyAppointment from './emptyAppointment';
-import MakeAppointmentForm from '../../make_appointment_from';
+import MakeAppointmentForm from '../../make_appointment_form';
 
 
 const AppointmentSection = () => {
@@ -19,8 +19,6 @@ const AppointmentSection = () => {
         archiveAppointments,
         fetchCurrentAppointments,
         fetchArchiveAppointments,
-        updateCurrentAppointment,
-        removeCurrentAppointment,
     } = useAppointmentStore();
 
     const [selectedType, setSelectedType] = useState<'current' | 'archive'>('current');
@@ -124,13 +122,13 @@ const AppointmentSection = () => {
                             </Box>
                         ))
                     ) : (
-                        <Typography variant="body1">Пока что у вас нет архивных записей</Typography>
+                        <EmptyAppointment />
                     )
                 )}
             </Box>
 
-            <ConfirmationDialog open={isConfirmationDialogOpen} setOpen={setConfirmationDialogOpen} appointmentId={selectedAppointmentId} removeAppointment={removeCurrentAppointment} />
-            <EditDialog open={isEditDialogOpen} setOpen={setEditDialogOpen} old_appointmentId={selectedAppointmentId} doctorName={selectedDoctor} updateCurrentAppointment={updateCurrentAppointment} />
+            <ConfirmationDialog open={isConfirmationDialogOpen} setOpen={setConfirmationDialogOpen} appointmentId={selectedAppointmentId}  />
+            <EditDialog open={isEditDialogOpen} setOpen={setEditDialogOpen} old_appointmentId={selectedAppointmentId} doctorName={selectedDoctor} />
             <MakeAppointmentForm open={isMakeAppointmentOpen} setOpen={setMakeAppointmentOpen} />
         </Box>
     );
