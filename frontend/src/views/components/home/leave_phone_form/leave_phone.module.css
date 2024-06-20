@@ -12,7 +12,7 @@
 .form {
 	display: flex;
 	justify-content: space-evenly;
-	text-align: center;
+	text-align: start;
 	align-items: center;
 	width: 100%;
 	gap: 2rem;
@@ -27,7 +27,7 @@
 }
 
 .item {
-	width: 100%;
+    width: 30%;
 	border-radius: 100px;
 	background: #fff;
 }
