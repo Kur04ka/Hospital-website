@@ -1,33 +1,34 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    gap: 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1rem;
+	gap: 1rem;
 }
 
 .nav {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	gap: 2rem;
+	justify-content: flex-end;
+	align-items: center;
+	flex: 1;
 }
 
 .button.button {
-    font-family: Gilroy Bold;
-    background-color: rgba(19, 84, 147, 1);
-    width: 200;
-    padding: 0.5rem 2rem;
-    border-radius: 1.5rem;
+	font-family: Gilroy Bold;
+	background-color: rgba(19, 84, 147, 1);
+	width: 200;
+	padding: 0.5rem 2rem;
+	border-radius: 1.5rem;
 }
 
 .company_name.company_name {
-    color: rgba(19, 84, 147, 1);
-    font-family: 'Gilroy Extra Bold'; 
-    margin-left: 1rem;
-    line-height: 1.5rem;
+	color: rgba(19, 84, 147, 1);
+	font-family: "Gilroy Extra Bold";
+	margin-left: 1rem;
+	line-height: 1.5rem;
 }
 
 .gilroy_bold.gilroy_bold {
-    font-family: Gilroy Bold;
+	font-family: Gilroy Bold;
 }
