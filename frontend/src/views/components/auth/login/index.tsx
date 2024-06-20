@@ -64,7 +64,7 @@ const LoginPage: React.FC = (): JSX.Element => {
 					<TextField
 						onChange={e => setPassword(e.target.value)}
 						fullWidth
-						InputProps={{ sx: { borderRadius: "1.5rem" } }}
+						InputProps={{ sx: { borderRadius: "1.5rem"} }}
 						required
 						type="password"
 						label="Пароль"
