@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { instance } from '../../utils/axios';
 
-// Определяем интерфейс пользователя
 interface User {
     email: string;
     name: string;
@@ -12,13 +11,11 @@ interface User {
     created_at: string;
 }
 
-// Определяем интерфейс для хранилища Zustand
 interface UserStore {
     user: User;
     fetchUser: () => void;
 }
 
-// Создаем хранилище Zustand
 export const useUserStore = create<UserStore>((set) => ({
     user: {
         email: '',

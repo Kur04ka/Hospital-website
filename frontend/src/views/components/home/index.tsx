@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <>
       <Header />
-      <Box display={'flex'} flexDirection={'column'} justifyContent={'space-evenly'} padding={'3%'} height={'200vh'} gap={'1rem'}>
+      <Box display={'flex'} flexDirection={'column'} justifyContent={'space-evenly'} padding={'3%'} gap={'4rem'}>
         <Container maxWidth="xl" fixed>
           <ContactForm />
         </Container>
