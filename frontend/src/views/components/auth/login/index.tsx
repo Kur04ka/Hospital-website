@@ -29,9 +29,7 @@ const LoginPage: React.FC = (): JSX.Element => {
       navigate('/')
 
     } catch (e) {
-
       return e
-
     }
   }
 
