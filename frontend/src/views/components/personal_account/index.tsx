@@ -1,21 +1,26 @@
-import { Box } from '@mui/material';
-import Header from '../header';
-import Footer from '../footer';
-import UserInformation from './user_info'
-import AppointmentSection from './appointment_section'
-
+import { Box } from "@mui/material";
+import Header from "../header";
+import Footer from "../footer";
+import UserInformation from "./user_info";
+import AppointmentSection from "./appointment_section";
 
 const PersonalAccount = () => {
-  return (
-    <>
-      <Header/>
-      <Box display={'flex'} flexDirection={'column'} justifyContent={'space-evenly'} padding={'5rem'} gap={'3rem'}>
-        <UserInformation />
-        <AppointmentSection />
-      </Box>
-      <Footer />
-    </>
-  );
-}
+	return (
+		<>
+			<Header />
+			<Box
+				display={"flex"}
+				flexDirection={"column"}
+				justifyContent={"space-evenly"}
+				padding={"5rem"}
+				gap={"3rem"}
+			>
+				<UserInformation />
+				<AppointmentSection />
+			</Box>
+			<Footer />
+		</>
+	);
+};
 
 export default PersonalAccount;
