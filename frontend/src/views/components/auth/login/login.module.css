@@ -1,51 +1,52 @@
 .container {
-	min-height: inherit;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	gap: 1rem;
+    min-height: inherit;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .main {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex: 1;
-	gap: 1rem;
-	padding-inline: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    gap: 1rem;
+    padding-inline: 2rem;
 }
 
 .authForm {
-	flex: 1;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	gap: 1rem;
-	max-width: 400px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
 }
 
+
 .button.button {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	align-self: center;
-	padding: 0.8rem 2rem;
-	border-radius: 1.5rem;
-	font-family: inherit;
-	background-color: rgba(19, 84, 147, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    padding: 0.8rem 2rem;
+    border-radius: 1.5rem;
+    font-family: inherit;
+    background-color: rgba(19, 84, 147, 1);
 }
 
 .link {
-	text-align: center;
-	transition: 0.5s;
-	&:hover {
-		color: rgba(119, 152, 200, 1);
-		text-decoration: underline;
-	}
+    text-align: center;
+    transition: .5s;
+    &:hover {
+        color: rgba(119, 152, 200, 1);
+        text-decoration: underline;
+    }
 }
 
 @media screen and (max-width: 800px) {
-	.woman__container {
-		display: none;
-	}
+    .woman__container {
+        display: none;
+    }
 }

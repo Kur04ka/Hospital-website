@@ -1,19 +1,19 @@
 .main {
-	background-color: rgba(19, 84, 147, 1);
-	color: rgba(246, 237, 235, 1);
-	padding: 1.5rem;
-	width: 100%;
-	display: flex;
-	gap: 1rem;
-	flex-direction: column;
+    background-color: rgba(19, 84, 147, 1);
+    color: rgba(246, 237, 235, 1);
+    padding: 1.5rem;
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
 }
 
 .typography.typography {
-	color: rgba(246, 237, 235, 1);
-	font-family: Gilroy medium;
+    color: rgba(246, 237, 235, 1);
+    font-family: Gilroy medium;
 }
 
 .company_name.company_name {
-	color: rgba(246, 237, 235, 1);
-	font-family: "Gilroy Extra Bold";
+    color: rgba(246, 237, 235, 1);
+    font-family: 'Gilroy Extra Bold'; 
 }
