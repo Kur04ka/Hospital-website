@@ -1,8 +1,8 @@
 .button.button {
-    display: flex;
-    width: 250px;
-    padding: 0.8rem 0.5rem;
-    border-radius: 1.5rem;
-    font-family: inherit;
-    background-color: rgba(19, 84, 147, 1);
+	display: flex;
+	width: 250px;
+	padding: 0.8rem 0.5rem;
+	border-radius: 1.5rem;
+	font-family: inherit;
+	background-color: rgba(19, 84, 147, 1);
 }
