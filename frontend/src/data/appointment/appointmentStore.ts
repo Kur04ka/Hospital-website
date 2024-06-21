@@ -11,11 +11,11 @@ interface Appointment {
 interface AppointmentStore {
     currentAppointments: Appointment[];
     archiveAppointments: Appointment[];
-    fetchCurrentAppointments: () => void;
-    fetchArchiveAppointments: () => void;
-    updateCurrentAppointment: (old_appointment_id: number, new_appointment_id: number) => void;
-    removeCurrentAppointment: (appointment_id: number) => void;
-    createAppointment: (appointment_id: number) => void
+    fetchCurrentAppointments: () => Promise<void>;
+    fetchArchiveAppointments: () => Promise<void>;
+    updateCurrentAppointment: (old_appointment_id: number, new_appointment_id: number) => Promise<void>;
+    removeCurrentAppointment: (appointment_id: number) => Promise<void>;
+    createAppointment: (appointment_id: number) => Promise<void>;
 }
 
 export const useAppointmentStore = create<AppointmentStore>((set, get) => ({
@@ -29,11 +29,12 @@ export const useAppointmentStore = create<AppointmentStore>((set, get) => ({
                     'Authorization': `Bearer ${localStorage.getItem('jwt')}`
                 }
             });
-    
+
             const { currentAppointments } = get();
-    
+            const updatedCurrentAppointments = Array.isArray(currentAppointments) ? currentAppointments : [];
+
             set({
-                currentAppointments: [response.data, ...currentAppointments]
+                currentAppointments: [response.data, ...updatedCurrentAppointments]
             });
         } catch (error) {
             console.error('Error creating appointment:', error);
@@ -78,8 +79,9 @@ export const useAppointmentStore = create<AppointmentStore>((set, get) => ({
                 }
             );
             const { currentAppointments } = get();
+            const updatedCurrentAppointments = Array.isArray(currentAppointments) ? currentAppointments : [];
             set({
-                currentAppointments: currentAppointments.map((appointment) =>
+                currentAppointments: updatedCurrentAppointments.map((appointment) =>
                     appointment.appointment_id === old_appointment_id ? response.data : appointment
                 ),
             });
@@ -96,8 +98,9 @@ export const useAppointmentStore = create<AppointmentStore>((set, get) => ({
                 }
             });
             const { currentAppointments } = get();
+            const updatedCurrentAppointments = Array.isArray(currentAppointments) ? currentAppointments : [];
             set({
-                currentAppointments: currentAppointments.filter((appointment) => appointment.appointment_id !== appointment_id),
+                currentAppointments: updatedCurrentAppointments.filter((appointment) => appointment.appointment_id !== appointment_id),
             });
         } catch (error) {
             console.error('Error removing appointment:', error);

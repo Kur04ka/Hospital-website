@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, ListItemButton, ListItemText, Typography } from '@mui/material';
+import { Box, Grid, ListItemButton, ListItemText, Typography } from '@mui/material';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import styles from './schedule.module.css'
@@ -56,30 +56,35 @@ const DoctorScheduleCalendar: React.FC<DoctorScheduleCalendarProps> = ({ doctorN
     };
 
     return (
-        <Box>
+        <Box display={'flex'} justifyContent={'center'} flexDirection={'column'} alignItems={'center'} gap={'2rem'}>
             <Calendar
                 onClickDay={onDateClick}
                 tileDisabled={({ date }) => !isDateInAppointments(date)}
             />
             {selectedDate && (
-                <Box display={'flex'} flexDirection={'column'} gap={'1rem'} padding={'1rem'} width={'100%'}>
-                    <Typography variant="h5" style={{color: 'rgba(8, 44, 77, 1)', fontFamily: 'Gilroy medium', textAlign: 'center'}}>Доступное время:</Typography>
-                    <Box display={'flex'} gap={'1rem'} justifyContent={'start'} flexWrap={'wrap'}>
+                <Box display={'flex'} flexDirection={'column'} gap={'1rem'}>
+                    <Typography variant="h5" style={{ color: 'rgba(8, 44, 77, 1)', fontFamily: 'Gilroy medium', textAlign: 'center' }}>Доступное время:</Typography>
+                    <Grid container rowGap={'1rem'} columnGap={'4rem'}>
                         {appointments
                             .filter(appointment =>
                                 new Date(appointment.begins_at).toDateString() === selectedDate.toDateString()
                             )
                             .map(appointment => (
-                                <ListItemButton
-                                    key={appointment.appointment_id}
-                                    className={styles.list_item}
-                                    onClick={() => handleAppointmentClick(appointment.appointment_id)}
+                                <Grid
+                                    item
+                                    xs={5}
                                 >
-                                    <ListItemText primary={`${formatTime(appointment.begins_at)}`} />
-                                </ListItemButton>
+                                    <ListItemButton
+                                        key={appointment.appointment_id}
+                                        className={styles.list_item}
+                                        onClick={() => handleAppointmentClick(appointment.appointment_id)}
+                                    >
+                                        <ListItemText primary={`${formatTime(appointment.begins_at)}`} />
+                                    </ListItemButton>
+                                </Grid>
                             ))
                         }
-                    </Box>
+                    </Grid>
                 </Box>
             )}
         </Box>

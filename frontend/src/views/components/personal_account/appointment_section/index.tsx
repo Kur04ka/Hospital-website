@@ -11,7 +11,6 @@ import MakeAppointmentForm from '../../make_appointment_form';
 import { formatDate, formatTime } from '../../../../utils/date_parser';
 import { useAppointmentStore } from '../../../../data/appointment/appointmentStore';
 
-
 const AppointmentSection = () => {
     const {
         currentAppointments,
@@ -29,6 +28,22 @@ const AppointmentSection = () => {
     const [selectedAppointmentId, setSelectedAppointmentId] = useState<number>(0);
     const [selectedDoctor, setSelectedDoctor] = useState<string>('');
 
+    useEffect(() => {
+        const fetchData = async () => {
+            if (selectedType === 'current') {
+                await fetchCurrentAppointments();
+            } else {
+                await fetchArchiveAppointments();
+            }
+        };
+        fetchData();
+    }, [selectedType, fetchCurrentAppointments, fetchArchiveAppointments]);
+
+    useEffect(() => {
+        setHasCurrentAppointments(currentAppointments && currentAppointments.length > 0);
+        setHasArchiveAppointments(archiveAppointments && archiveAppointments.length > 0);
+    }, [currentAppointments, archiveAppointments]);
+
     const handleDeleteClick = (appointmentId: number) => {
         setSelectedAppointmentId(appointmentId);
         setConfirmationDialogOpen(true);
@@ -36,31 +51,13 @@ const AppointmentSection = () => {
 
     const handleEditClick = (appointmentId: number, doctorName: string) => {
         setSelectedAppointmentId(appointmentId);
-        setSelectedDoctor(doctorName)
+        setSelectedDoctor(doctorName);
         setEditDialogOpen(true);
     };
 
     const handleMakeAppointmentFormClick = () => {
-        setMakeAppointmentOpen(true)
-    }
-
-    // TODO: Разобрать с useEffect
-    useEffect(() => {
-        if (selectedType === 'current') {
-            fetchCurrentAppointments();
-        } else {
-            fetchArchiveAppointments();
-        }
-    }, [selectedType]);
-
-    useEffect(() => {
-        if (currentAppointments !== null) {
-            setHasCurrentAppointments(currentAppointments.length > 0);
-        }
-        if (archiveAppointments !== null) {
-            setHasArchiveAppointments(archiveAppointments.length > 0);
-        }
-    }, [currentAppointments, archiveAppointments]);
+        setMakeAppointmentOpen(true);
+    };
 
     const handleChange = (event: any) => {
         setSelectedType(event.target.value as 'current' | 'archive');
@@ -84,9 +81,9 @@ const AppointmentSection = () => {
             </Box>
             <Box display={'flex'} flexDirection={'column'} gap={'1rem'}>
                 {selectedType === 'current' ? (
-                    hasCurrentAppointments ? ( // Проверяем наличие текущих записей перед их отображением
+                    hasCurrentAppointments ? (
                         appointments.map((appointment) => (
-                            <Box key={appointment.appointment_id} display={'flex'} justifyContent={'space-between'} padding={'1rem'} sx={{ backgroundColor: 'rgba(238, 243, 248, 1)', borderRadius: '3rem' }}>
+                            <Box key={appointment.appointment_id} textAlign={'center'} alignItems={'center'} display={'flex'} justifyContent={'space-between'} padding={'1rem 1.5rem'} sx={{ backgroundColor: 'rgba(238, 243, 248, 1)', borderRadius: '3rem' }}>
                                 <Typography variant="h6" color={'rgba(137, 155, 181, 1)'}>
                                     {appointment.doctor_name}
                                 </Typography>
@@ -127,7 +124,7 @@ const AppointmentSection = () => {
                 )}
             </Box>
 
-            <ConfirmationDialog open={isConfirmationDialogOpen} setOpen={setConfirmationDialogOpen} appointmentId={selectedAppointmentId}  />
+            <ConfirmationDialog open={isConfirmationDialogOpen} setOpen={setConfirmationDialogOpen} appointmentId={selectedAppointmentId} />
             <EditDialog open={isEditDialogOpen} setOpen={setEditDialogOpen} old_appointmentId={selectedAppointmentId} doctorName={selectedDoctor} />
             <MakeAppointmentForm open={isMakeAppointmentOpen} setOpen={setMakeAppointmentOpen} />
         </Box>

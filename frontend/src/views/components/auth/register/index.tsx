@@ -27,18 +27,19 @@ const RegisterPage: React.FC = (): JSX.Element => {
 
   const validatePassword = (password: string) => {
     const isLongEnough = password.length >= 5;
-
     return isLongEnough;
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-    setIsPasswordValid(validatePassword(password));
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    setIsPasswordValid(validatePassword(newPassword));
   };
 
   const handleRepeatPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRepeatPassword(e.target.value);
-    setIsPasswordMatch(password === repeatPassword);
+    const newRepeatPassword = e.target.value;
+    setRepeatPassword(newRepeatPassword);
+    setIsPasswordMatch(newRepeatPassword === password);
   };
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
@@ -90,7 +91,7 @@ const RegisterPage: React.FC = (): JSX.Element => {
               </Select>
             </FormControl>
 
-            <TextField  helperText={!isPasswordValid ? 'Пароль должен содержать более 5 символов' : ''} onChange={handlePasswordChange} className={styles.item} required type='text' label="Пароль" placeholder="Введите ваш пароль" />
+            <TextField  helperText={!isPasswordValid ? 'Пароль должен содержать более 4 символов' : ''} onChange={handlePasswordChange} className={styles.item} required type='text' label="Пароль" placeholder="Введите ваш пароль" />
             <TextField onChange={(e) => setEmail(e.target.value)} className={styles.item} required type='email' label="Электронная почта" placeholder="example@mail.com" />
 
             <TextField helperText={!isPasswordMatch ? 'Пароли не совпадают.' : ''} onChange={handleRepeatPasswordChange} className={styles.item} required type='password' label="Подтвердите пароль" placeholder="Подтвердите ваш пароль" />
