@@ -38,7 +38,7 @@ func AuthCheck(apph appHandler, role string) http.HandlerFunc {
 		}
 
 		if !(payload["role"] == role) {
-			http.Error(w, "the user does not have rights to perform this action", http.StatusUnauthorized)
+			http.Error(w, "the user does not have rights to perform this action", http.StatusForbidden)
 			return
 		}
 

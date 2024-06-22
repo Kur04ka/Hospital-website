@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { instance } from '../../utils/axios';
 
-interface Appointment {
+export interface Appointment {
     appointment_id: number;
     doctor_name: string;
     begins_at: string;
@@ -70,7 +70,7 @@ export const useAppointmentStore = create<AppointmentStore>((set, get) => ({
     updateCurrentAppointment: async (old_appointment_id: number, new_appointment_id: number) => {
         try {
             const response = await instance.patch<Appointment>(
-                `/appointments/patch-appointment?old_id=${old_appointment_id}&new_id=${new_appointment_id}`,
+                `/appointments/change-appointment?old_id=${old_appointment_id}&new_id=${new_appointment_id}`,
                 {},
                 {
                     headers: {

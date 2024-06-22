@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Box, FormControl, Typography, Select, MenuItem, Button, IconButton } from '@mui/material';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import EditDialog from './editDialog';
-import styles from './appointment.module.css';
-import EmptyAppointment from './emptyAppointment';
-import ConfirmationDialog from './confirmationDialog'
+import { Box } from '@mui/material';
+import EditDialog from './dialogs/editDialog';
+import ConfirmationDialog from './dialogs/confirmationDialog';
 import MakeAppointmentForm from '../../make_appointment_form';
-import { formatDate, formatTime } from '../../../../utils/date_parser';
+import AppointmentControls from './appointments/appointmentControls';
+import AppointmentList from './appointments/appointmentList';
 import { useAppointmentStore } from '../../../../data/appointment/appointmentStore';
 
 const AppointmentSection = () => {
@@ -20,8 +16,6 @@ const AppointmentSection = () => {
     } = useAppointmentStore();
 
     const [selectedType, setSelectedType] = useState<'current' | 'archive'>('current');
-    const [hasArchiveAppointments, setHasArchiveAppointments] = useState<boolean>(false);
-    const [hasCurrentAppointments, setHasCurrentAppointments] = useState<boolean>(false);
     const [isConfirmationDialogOpen, setConfirmationDialogOpen] = useState(false);
     const [isEditDialogOpen, setEditDialogOpen] = useState(false);
     const [isMakeAppointmentOpen, setMakeAppointmentOpen] = useState(false);
@@ -39,10 +33,6 @@ const AppointmentSection = () => {
         fetchData();
     }, [selectedType, fetchCurrentAppointments, fetchArchiveAppointments]);
 
-    useEffect(() => {
-        setHasCurrentAppointments(currentAppointments && currentAppointments.length > 0);
-        setHasArchiveAppointments(archiveAppointments && archiveAppointments.length > 0);
-    }, [currentAppointments, archiveAppointments]);
 
     const handleDeleteClick = (appointmentId: number) => {
         setSelectedAppointmentId(appointmentId);
@@ -67,63 +57,18 @@ const AppointmentSection = () => {
 
     return (
         <Box display={'flex'} flexDirection={'column'} gap={'2rem'} padding={'3rem'} border={'3px solid rgba(238, 243, 248, 1)'} sx={{ borderRadius: '3rem' }}>
-            <Box display={'flex'} justifyContent={'space-between'}>
-                <Box display={'flex'} justifyContent={'start'} alignItems={'center'} gap={'3rem'}>
-                    <Typography variant="h4">Записи на прием к врачу</Typography>
-                    <FormControl size='small'>
-                        <Select value={selectedType} onChange={handleChange} sx={{ borderRadius: '3rem' }}>
-                            <MenuItem value="current">Текущие</MenuItem>
-                            <MenuItem value="archive">Архив</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Box>
-                <Button className={styles.button} onClick={handleMakeAppointmentFormClick} variant="contained">Записаться на прием</Button>
-            </Box>
-            <Box display={'flex'} flexDirection={'column'} gap={'1rem'}>
-                {selectedType === 'current' ? (
-                    hasCurrentAppointments ? (
-                        appointments.map((appointment) => (
-                            <Box key={appointment.appointment_id} textAlign={'center'} alignItems={'center'} display={'flex'} justifyContent={'space-between'} padding={'1rem 1.5rem'} sx={{ backgroundColor: 'rgba(238, 243, 248, 1)', borderRadius: '3rem' }}>
-                                <Typography variant="h6" color={'rgba(137, 155, 181, 1)'}>
-                                    {appointment.doctor_name}
-                                </Typography>
-                                <Typography variant="h6" color={'rgba(137, 155, 181, 1)'}>
-                                    {formatDate(appointment.begins_at)}
-                                </Typography>
-                                <Typography variant="h6" color={'rgba(137, 155, 181, 1)'}>
-                                    {formatTime(appointment.begins_at)}
-                                </Typography>
-                                <Box display={'flex'} gap={'2rem'}>
-                                    <IconButton onClick={() => handleEditClick(appointment.appointment_id, appointment.doctor_name)}><EditIcon /></IconButton>
-                                    <IconButton onClick={() => handleDeleteClick(appointment.appointment_id)}><DeleteIcon style={{ color: 'rgba(221, 101, 101, 1)' }} /></IconButton>
-                                </Box>
-                            </Box>
-                        ))
-                    ) : (
-                        <EmptyAppointment />
-                    )
-                ) : (
-                    hasArchiveAppointments ? (
-                        appointments.map((appointment) => (
-                            <Box key={appointment.appointment_id} display={'flex'} justifyContent={'space-between'} borderRadius={4} padding={'1rem'} sx={{ backgroundColor: 'rgba(238, 243, 248, 1)' }}>
-                                <Typography variant="h6" color={'rgba(137, 155, 181, 1)'}>
-                                    {appointment.doctor_name}
-                                </Typography>
-                                <Typography variant="h6" color={'rgba(137, 155, 181, 1)'}>
-                                    {formatDate(appointment.begins_at)}
-                                </Typography>
-                                <Typography variant="h6" color={'rgba(137, 155, 181, 1)'}>
-                                    {formatTime(appointment.begins_at)}
-                                </Typography>
-                                <CheckCircleOutlineIcon sx={{ color: 'green', marginRight: '1rem', marginTop: '0.2rem' }} />
-                            </Box>
-                        ))
-                    ) : (
-                        <EmptyAppointment />
-                    )
-                )}
-            </Box>
-
+            <AppointmentControls
+                selectedType={selectedType}
+                handleChange={handleChange}
+                handleMakeAppointmentFormClick={handleMakeAppointmentFormClick}
+            />
+            <AppointmentList
+                appointments={appointments}
+                selectedType={selectedType}
+                handleEditClick={handleEditClick}
+                handleDeleteClick={handleDeleteClick}
+                handleMakeAppointmentFormClick={handleMakeAppointmentFormClick}
+            />
             <ConfirmationDialog open={isConfirmationDialogOpen} setOpen={setConfirmationDialogOpen} appointmentId={selectedAppointmentId} />
             <EditDialog open={isEditDialogOpen} setOpen={setEditDialogOpen} old_appointmentId={selectedAppointmentId} doctorName={selectedDoctor} />
             <MakeAppointmentForm open={isMakeAppointmentOpen} setOpen={setMakeAppointmentOpen} />

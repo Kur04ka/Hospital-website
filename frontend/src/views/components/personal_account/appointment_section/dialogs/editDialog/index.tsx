@@ -8,9 +8,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import React from 'react';
 import { useState } from 'react';
 import styles from './dialog.module.css'
-import DoctorScheduleDatePicker from '../../../make_appointment_form/scheduleDatePicker'
-import { instance } from '../../../../../utils/axios';
-import { useAppointmentStore } from '../../../../../data/appointment/appointmentStore';
+import DoctorScheduleDatePicker from '../../../../make_appointment_form/scheduleDatePicker'
+import { useAppointmentStore } from '../../../../../../data/appointment/appointmentStore';
 
 interface ConfirmationDialogProps {
     open: boolean;

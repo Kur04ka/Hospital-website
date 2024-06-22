@@ -2,7 +2,7 @@ import React from 'react';
 import { Dialog, DialogContent } from '@material-ui/core';
 import { Typography, Button, Box, DialogTitle } from '@mui/material';
 import styles from './dialog.module.css'
-import { useAppointmentStore } from '../../../../../data/appointment/appointmentStore';
+import { useAppointmentStore } from '../../../../../../data/appointment/appointmentStore';
 
 interface ConfirmationDialogProps {
     open: boolean;

@@ -1,6 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { instance } from "../axios";
+import CircularProgress from '@mui/material/CircularProgress';
 import React, { useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
 
 const PrivateRoute = () => {
     const [auth, setAuth] = useState(false);
@@ -33,7 +35,11 @@ const PrivateRoute = () => {
     }, []);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <Box display={'flex'} flexDirection={'column'} height={'100vh'} textAlign={'center'} alignItems={'center'} justifyContent={'center'} gap={'3rem'}>
+                <CircularProgress size={100}></CircularProgress>
+            </Box>
+        )
     }
 
     return (
