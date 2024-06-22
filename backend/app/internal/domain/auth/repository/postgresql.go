@@ -85,7 +85,20 @@ func (repo *authRepository) GetUser(email, password string) (model.User, error) 
 
 	var user model.User
 
-	sql, args, err := repo.qb.Select("*").
+	sql, args, err := repo.qb.
+		Select(
+			"id",
+			"email",
+			"password",
+			"name",
+			"surname",
+			"sex",
+			"birth_date",
+			"phone_number",
+			"created_at",
+			"is_verified",
+			"role",
+		).
 		From(postgresql.UsersTable).
 		Where(sq.Eq{"email": email, "password": password}).
 		ToSql()
@@ -106,6 +119,7 @@ func (repo *authRepository) GetUser(email, password string) (model.User, error) 
 		&user.PhoneNumber,
 		&user.Created_at,
 		&user.IsVerified,
+		&user.Role,
 	)
 	if err != nil {
 		err = psql.ErrScan(psql.ParsePgError(err))
@@ -140,9 +154,9 @@ func (repo *authRepository) DeleteUser(email string) error {
 	log.Trace("deleting user")
 
 	sql, args, err := repo.qb.
-	Delete(postgresql.UsersTable).
-	Where(sq.Eq{"email": email}).
-	ToSql()
+		Delete(postgresql.UsersTable).
+		Where(sq.Eq{"email": email}).
+		ToSql()
 	if err != nil {
 		err = psql.ErrCreateQuery(psql.ParsePgError(err))
 		return err
@@ -377,12 +391,11 @@ func (repo *authRepository) GenerateToken(email, password string) (string, error
 		return "", err
 	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, &tokenClaims{
-		jwt.MapClaims{
-			"exp": time.Now().Add(tokenTTL).Unix(),
-			"iat": time.Now().Unix(),
-		},
-		user.Id,
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, &jwt.MapClaims{
+		"exp":   time.Now().Add(tokenTTL).Unix(),
+		"iat":   time.Now().Unix(),
+		"role": user.Role,
+		"ueid":  user.Id,
 	})
 
 	return token.SignedString([]byte(signingkey))
@@ -393,7 +406,8 @@ func (repo *authRepository) IsUserPasswordCorrect(email, password string) (bool,
 
 	var user model.User
 
-	sql, args, err := repo.qb.Select("*").
+	sql, args, err := repo.qb.
+		Select("password").
 		From(postgresql.UsersTable).
 		Where(sq.Eq{"email": email}).
 		ToSql()
@@ -404,16 +418,7 @@ func (repo *authRepository) IsUserPasswordCorrect(email, password string) (bool,
 	log.Tracef("sql: %q", sql)
 
 	err = repo.client.QueryRow(context.Background(), sql, args...).Scan(
-		&user.Id,
-		&user.Email,
 		&user.Password,
-		&user.Name,
-		&user.Surname,
-		&user.Sex,
-		&user.Birthdate,
-		&user.PhoneNumber,
-		&user.Created_at,
-		&user.IsVerified,
 	)
 	if err != nil {
 		err = psql.ErrScan(psql.ParsePgError(err))
@@ -427,11 +432,6 @@ func (repo *authRepository) IsUserPasswordCorrect(email, password string) (bool,
 	log.Tracef("success checking if password is correct")
 
 	return true, nil
-}
-
-type tokenClaims struct {
-	jwt.MapClaims
-	UserId string `json:"user_id"`
 }
 
 func generatePasswordHash(password string) string {

@@ -24,19 +24,19 @@ app_config :
     admin_pwd : admin
 
 # Locally:
-# postgresql :
-#   psql_username : root
-#   psql_password : 12345
-#   psql_host : localhost
-#   psql_port : 5435
-#   psql_database : hospital
-
-# Docker: 
 postgresql :
   psql_username : root
   psql_password : 12345
-  psql_host : db
-  psql_port : 5432
+  psql_host : localhost
+  psql_port : 5435
   psql_database : hospital
+
+# Docker: 
+# postgresql :
+#   psql_username : root
+#   psql_password : 12345
+#   psql_host : db
+#   psql_port : 5432
+#   psql_database : hospital
 
 ---

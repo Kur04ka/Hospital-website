@@ -3,6 +3,7 @@ package middleware
 import (
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/Kur04ka/hospital/internal/common"
 )
@@ -23,13 +24,19 @@ func AuthCheck(apph appHandler) http.HandlerFunc {
 			return
 		}
 
-		userId, err := common.ParseToken(headerParts[1])
+		payload, err := common.ParseToken(headerParts[1])
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusUnauthorized)
 			return
 		}
 
-		r.Header.Set("user_id", userId)
+		if time.Now().After(payload["exp"].(time.Time)) {
+			http.Error(w, "token is expired", http.StatusUnauthorized)
+			return 
+		}
+
+		r.Header.Set("user_id", payload["ueid"].(string))
+		r.Header.Set("role", payload["role"].(string))
 		apph(w, r)
 	}
 }

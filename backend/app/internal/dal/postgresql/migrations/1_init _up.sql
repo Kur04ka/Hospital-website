@@ -13,8 +13,10 @@ CREATE TABLE IF NOT EXISTS public.users (
 	phone_number TEXT NOT NULL,
 	created_at DATE NOT NULL,
 	is_verified BOOL NOT NULL DEFAULT false,
+	role TEXT NOT NULL DEFAULT 'user',
 	PRIMARY KEY (id),
-	CONSTRAINT sex_check CHECK (sex IN ('Мужчина', 'Женщина'))
+	CONSTRAINT sex_check CHECK (sex IN ('Мужчина', 'Женщина')),
+	CONSTRAINT role_check CHECK (role IN ('user', 'doctor'))
 );
 
 CREATE TABLE IF NOT EXISTS public.doctor (

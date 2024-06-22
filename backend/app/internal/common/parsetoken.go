@@ -8,32 +8,21 @@ import (
 
 const signingkey = "w0d@#a0wdWDAPWD;aw;@wa@!"
 
-func ParseToken(accessToken string) (string, error) {
-	token, err := jwt.ParseWithClaims(accessToken, &tokenClaims{}, func(t *jwt.Token) (interface{}, error) {
+func ParseToken(accessToken string) (jwt.MapClaims, error) {
+	token, err := jwt.ParseWithClaims(accessToken, jwt.MapClaims{}, func(t *jwt.Token) (interface{}, error) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("invalid signing method")
 		}
-
 		return []byte(signingkey), nil
 	})
-
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	claims, ok := token.Claims.(*tokenClaims)
+	payload, ok := token.Claims.(jwt.MapClaims)
 	if !ok {
-		return "", errors.New("token claims are not of type *tokenClaims")
+		return nil, errors.New("token claims are not of type jwt.MapClaims")
 	}
 
-	if claims.UserId == "" {
-		return "", errors.New("invalid token")
-	}
-
-	return claims.UserId, nil
-}
-
-type tokenClaims struct {
-	jwt.MapClaims
-	UserId string `json:"user_id"`
+	return payload, nil
 }
