@@ -23,11 +23,29 @@ func NewAppointmentHandler(repository repository.Repository) handlers.Handler {
 
 func (h *handler) Register(router *httprouter.Router) {
 	router.HandlerFunc(http.MethodGet, "/doctors/doctor-schedule/:doctor-name", h.getScheduleByDoctorName)
-	router.HandlerFunc(http.MethodPost, "/appointments/create-new-appointment/:appointmentID", middleware.AuthCheck(h.makeNewAppointment))
-	router.HandlerFunc(http.MethodGet, "/appointments/current-appointments-by-uuid", middleware.AuthCheck(h.getAllCurrentAppointments))
-	router.HandlerFunc(http.MethodGet, "/appointments/archieve-appointments-by-uuid", middleware.AuthCheck(h.getAllArchieveAppointments))
-	router.HandlerFunc(http.MethodDelete, "/appointments/delete-appointment/:appointmentID", middleware.AuthCheck(h.deleteAppointment))
-	router.HandlerFunc(http.MethodPatch, "/appointments/patch-appointment", middleware.AuthCheck(h.patchAppointment))
+	router.HandlerFunc(http.MethodPost, "/appointments/create-new-appointment/:appointmentID", middleware.AuthCheck(h.makeNewAppointment, "patient"))
+	router.HandlerFunc(http.MethodGet, "/appointments/current-appointments-by-uuid", middleware.AuthCheck(h.getAllCurrentAppointments, "patient"))
+	router.HandlerFunc(http.MethodGet, "/appointments/archieve-appointments-by-uuid", middleware.AuthCheck(h.getAllArchieveAppointments, "patient"))
+	router.HandlerFunc(http.MethodDelete, "/appointments/delete-appointment/:appointmentID", middleware.AuthCheck(h.deleteAppointment, "patient"))
+	router.HandlerFunc(http.MethodPatch, "/appointments/change-appointment", middleware.AuthCheck(h.patchAppointment, "patient"))
+	router.HandlerFunc(http.MethodPatch, "/appointments/change-appointment-status", middleware.AuthCheck(h.changeStatus, "doctor"))
+}
+
+func (h *handler) changeStatus(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+	status := r.URL.Query().Get("status")
+
+	err = h.repository.AppointmentStatusChange(id, status)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 }
 
 func (h *handler) getScheduleByDoctorName(w http.ResponseWriter, r *http.Request) {

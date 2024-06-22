@@ -30,8 +30,8 @@ func (h *handler) Register(router *httprouter.Router) {
 	router.HandlerFunc(http.MethodPost, "/auth/sign-up", h.signUp)
 	router.HandlerFunc(http.MethodPost, "/auth/sign-in", h.signIn)
 	router.HandlerFunc(http.MethodPost, "/auth/sign-up/verifyemail", h.verifyEmail)
-	router.HandlerFunc(http.MethodGet, "/user/user-details", middleware.AuthCheck(h.userDetails))
-	router.HandlerFunc(http.MethodGet, "/user/ping-token", middleware.AuthCheck(func (w http.ResponseWriter, r *http.Request) {}))
+	router.HandlerFunc(http.MethodGet, "/user/user-details", middleware.AuthCheck(h.userDetails, "patient"))
+	router.HandlerFunc(http.MethodGet, "/user/ping-token", middleware.AuthCheck(func (w http.ResponseWriter, r *http.Request) {}, "patient"))
 }
 
 func (h *handler) userDetails(w http.ResponseWriter, r *http.Request) {

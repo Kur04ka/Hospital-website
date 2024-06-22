@@ -10,7 +10,8 @@ import (
 
 type appHandler func(w http.ResponseWriter, r *http.Request)
 
-func AuthCheck(apph appHandler) http.HandlerFunc {
+// role can be either 'doctor' or 'user'
+func AuthCheck(apph appHandler, role string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		header := r.Header.Get("Authorization")
 		if header == "" {
@@ -30,13 +31,18 @@ func AuthCheck(apph appHandler) http.HandlerFunc {
 			return
 		}
 
-		if time.Now().After(payload["exp"].(time.Time)) {
+		expTime := time.Unix(int64(payload["exp"].(float64)), 0)
+		if time.Now().After(expTime) {
 			http.Error(w, "token is expired", http.StatusUnauthorized)
-			return 
+			return
+		}
+
+		if !(payload["role"] == role) {
+			http.Error(w, "the user does not have rights to perform this action", http.StatusUnauthorized)
+			return
 		}
 
 		r.Header.Set("user_id", payload["ueid"].(string))
-		r.Header.Set("role", payload["role"].(string))
 		apph(w, r)
 	}
 }

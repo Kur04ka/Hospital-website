@@ -10,4 +10,5 @@ type Repository interface {
 
 	MakeAppointmentFreeByID(id int) error
 	GetAppointmentByID(id int) (model.Appointment, error)
+	AppointmentStatusChange(id int, status string) error
 }

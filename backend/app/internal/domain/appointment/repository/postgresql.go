@@ -277,3 +277,33 @@ func (repo *appointmentRepository) GetAppointmentByID(id int) (model.Appointment
 	log.Tracef("success getting appointment by id: %d", id)
 	return appointment, nil
 }
+
+func (repo *appointmentRepository) AppointmentStatusChange(id int, status string) error {
+	log.Trace("changing appointment status")
+
+	sql, args, err := repo.qb.
+	Update(postgresql.AppointmentTable).
+	Set("status", status).
+	Where(sq.Eq{"id": id}). 
+	ToSql()
+
+	if err != nil {
+		err = psql.ErrCreateQuery(psql.ParsePgError(err))
+		return err
+	}
+	log.Tracef("sql: %q", sql)
+
+	cmd, err := repo.client.Exec(context.TODO(), sql, args...)
+	if err != nil {
+		err = psql.ErrDoQuery(psql.ParsePgError(err))
+		return err
+	}
+	if cmd.RowsAffected() == 0 {
+		return dal.ErrNothingInserted
+	}
+
+	log.Tracef("rows affected: %d", cmd.RowsAffected())
+	log.Tracef("success changing appointment status with id %d", id)
+
+	return nil
+}

@@ -1,7 +1,6 @@
 -- Active: 1717324317447@@127.0.0.1@5435@hospital
 --------------------------- Migrate UP ---------------------------
 SET TIMEZONE = 'Asia/Krasnoyarsk';
-
 CREATE TABLE IF NOT EXISTS public.users (
 	id UUID DEFAULT gen_random_uuid(),
 	email TEXT NOT NULL UNIQUE,
@@ -16,18 +15,20 @@ CREATE TABLE IF NOT EXISTS public.users (
 	role TEXT NOT NULL DEFAULT 'user',
 	PRIMARY KEY (id),
 	CONSTRAINT sex_check CHECK (sex IN ('Мужчина', 'Женщина')),
-	CONSTRAINT role_check CHECK (role IN ('user', 'doctor'))
+	CONSTRAINT role_check CHECK (role IN ('patient', 'doctor'))
 );
 
 CREATE TABLE IF NOT EXISTS public.doctor (
 	id SERIAL NOT NULL,
+	user_id UUID NOT NULL,
 	fullname TEXT NOT NULL,
 	speciality TEXT NOT NULL,
 	description TEXT NOT NULL,
 	medical_degree TEXT NOT NULL,
 	work_experience INT NOT NULL,
-	is_head_doctor BOOL NOT NULL DEFAULT false,
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+	CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id)
+		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS public.users_verification_data (
@@ -35,7 +36,7 @@ CREATE TABLE IF NOT EXISTS public.users_verification_data (
 	code  		INT NOT NULL,
 	expires_at 	TIMESTAMPTZ NOT NULL,
 	PRIMARY KEY(email),
-	CONSTRAINT fk_user_email FOREIGN KEY(email) REFERENCES users(email)
+	CONSTRAINT fk_user_email FOREIGN KEY (email) REFERENCES users(email)
 		ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -46,13 +47,13 @@ CREATE TABLE IF NOT EXISTS public.appointment (
 	begins_at TIMESTAMPTZ NOT NULL,
 	ends_at TIMESTAMPTZ NOT NULL,
 	is_available BOOL NOT NULL DEFAULT true,
-	is_completed BOOL NOT NULL DEFAULT false,
-	is_expired BOOL NOT NULL DEFAULT false,
+	status TEXT NOT NULL DEFAULT 'pending',
 	PRIMARY KEY (id),
 	CONSTRAINT fk_user_uuid FOREIGN KEY (patient_uuid) REFERENCES users(id)
 		ON DELETE CASCADE ON UPDATE CASCADE,
 	CONSTRAINT fk_doctor_id FOREIGN KEY (doctor_id) REFERENCES doctor(id)
-		ON DELETE CASCADE ON UPDATE CASCADE
+		ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT status_check CHECK (status IN ('pending', 'completed', 'no show', 'expired'))
 );
 
 CREATE TABLE IF NOT EXISTS public.news (
