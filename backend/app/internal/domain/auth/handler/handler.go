@@ -31,7 +31,7 @@ func (h *handler) Register(router *httprouter.Router) {
 	router.HandlerFunc(http.MethodPost, "/auth/sign-in", h.signIn)
 	router.HandlerFunc(http.MethodPost, "/auth/sign-up/verifyemail", h.verifyEmail)
 	router.HandlerFunc(http.MethodGet, "/user/user-details", middleware.AuthCheck(h.userDetails, "patient"))
-	router.HandlerFunc(http.MethodGet, "/user/ping-token", middleware.AuthCheck(func (w http.ResponseWriter, r *http.Request) {}, "patient"))
+	router.HandlerFunc(http.MethodGet, "/user/ping-token", middleware.AuthCheck(func (w http.ResponseWriter, r *http.Request) {}, ""))
 }
 
 func (h *handler) userDetails(w http.ResponseWriter, r *http.Request) {
@@ -224,13 +224,13 @@ func (h *handler) signIn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Создание токена
-	token, err := h.repository.GenerateToken(user.Email, user.Password)
+	token, role, err := h.repository.GenerateToken(user.Email, user.Password)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	data, err := json.Marshal(token)
+	data, err := json.Marshal(map[string]string{"jwt": token, "role": role})
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return

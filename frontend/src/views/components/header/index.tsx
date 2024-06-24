@@ -4,6 +4,17 @@ import { NavLink } from 'react-router-dom';
 import styles from "./header.module.css";
 
 const Header: React.FC = (): JSX.Element => {
+    const role = localStorage.getItem('role');
+
+    let accountLink = '/';
+    if (role === 'patient') {
+        accountLink = '/personal-account';
+    } else if (role === 'doctor') {
+        accountLink = '/doctor-account';
+    } else {
+        accountLink = '/login'
+    }
+
     return (
         <AppBar position="static" sx={{ backgroundColor: 'inherit' }}>
             <Toolbar className={styles.header}>
@@ -33,7 +44,7 @@ const Header: React.FC = (): JSX.Element => {
                     </NavLink>
                 </nav>
                 <Box display='flex' alignItems='center'>
-                    <NavLink to="/personal-account" color="inherit">
+                    <NavLink to={accountLink} color="inherit">
                         <Button variant="contained" className={styles.button}> Личный кабинет</Button>
                     </NavLink>
                 </Box>

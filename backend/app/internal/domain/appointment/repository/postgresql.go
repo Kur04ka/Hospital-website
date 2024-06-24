@@ -282,10 +282,10 @@ func (repo *appointmentRepository) AppointmentStatusChange(id int, status string
 	log.Trace("changing appointment status")
 
 	sql, args, err := repo.qb.
-	Update(postgresql.AppointmentTable).
-	Set("status", status).
-	Where(sq.Eq{"id": id}). 
-	ToSql()
+		Update(postgresql.AppointmentTable).
+		Set("status", status).
+		Where(sq.Eq{"id": id}).
+		ToSql()
 
 	if err != nil {
 		err = psql.ErrCreateQuery(psql.ParsePgError(err))
@@ -306,4 +306,115 @@ func (repo *appointmentRepository) AppointmentStatusChange(id int, status string
 	log.Tracef("success changing appointment status with id %d", id)
 
 	return nil
+}
+
+func (repo *appointmentRepository) GetUnmarkedDoctorAppointments(doctor_uuid string) ([]model.AppointmentDoctorView, error) {
+	log.Tracef("getting unmarked appointments by doctor UUID %v", doctor_uuid)
+
+	var appointments []model.AppointmentDoctorView
+
+	sql, args, err := repo.qb.
+		Select(
+			"id",
+			"doctor_uuid",
+			"patient_name",
+			"begins_at",
+			"ends_at",
+		).
+		From(postgresql.DoctorAppointmentsView).
+		Where(sq.Eq{"doctor_uuid": doctor_uuid}).
+		Where(sq.Eq{"status": "pending"}).
+		OrderBy("begins_at").
+		ToSql()
+	if err != nil {
+		err = psql.ErrCreateQuery(psql.ParsePgError(err))
+		return nil, err
+	}
+	log.Tracef("sql: %q", sql)
+
+	rows, err := repo.client.Query(context.TODO(), sql, args...)
+	if err != nil {
+		err = psql.ErrDoQuery(psql.ParsePgError(err))
+		return nil, err
+	}
+
+	for rows.Next() {
+		var appointment model.AppointmentDoctorView
+
+		if err := rows.Scan(
+			&appointment.Id,
+			&appointment.DoctorUuid,
+			&appointment.PatientName,
+			&appointment.BeginsAt,
+			&appointment.EndsAt,
+		); err != nil {
+			err = psql.ErrScan(psql.ParsePgError(err))
+			log.Trace("error scan row")
+
+			return nil, err
+		}
+
+		appointments = append(appointments, appointment)
+	}
+
+	log.Tracef("success getting unmarked appointments by doctor UUID %v", doctor_uuid)
+
+	return appointments, nil
+}
+
+// TODO: проверить что будет, если status = expired
+func (repo *appointmentRepository) GetMarkedDoctorAppointments(doctor_uuid string) ([]model.AppointmentDoctorView, error) {
+	log.Tracef("getting marked appointments by doctor UUID %v", doctor_uuid)
+
+	var appointments []model.AppointmentDoctorView
+
+	sql, args, err := repo.qb.
+		Select(
+			"id",
+			"doctor_uuid",
+			"patient_name",
+			"begins_at",
+			"ends_at",
+			"status",
+		).
+		From(postgresql.DoctorAppointmentsView).
+		Where(sq.Eq{"doctor_uuid": doctor_uuid}).
+		Where(sq.NotEq{"status": "pending"}).
+		OrderBy("begins_at").
+		ToSql()
+	if err != nil {
+		err = psql.ErrCreateQuery(psql.ParsePgError(err))
+		return nil, err
+	}
+	log.Tracef("sql: %q", sql)
+
+	rows, err := repo.client.Query(context.TODO(), sql, args...)
+	if err != nil {
+		err = psql.ErrDoQuery(psql.ParsePgError(err))
+		return nil, err
+	}
+
+	for rows.Next() {
+		var appointment model.AppointmentDoctorView
+
+		if err := rows.Scan(
+			&appointment.Id,
+			&appointment.DoctorUuid,
+			&appointment.PatientName,
+			&appointment.BeginsAt,
+			&appointment.EndsAt,
+			&appointment.Status,
+		); err != nil {
+			err = psql.ErrScan(psql.ParsePgError(err))
+			log.Trace("error scan row")
+
+			return nil, err
+		}
+
+		appointments = append(appointments, appointment)
+	}
+
+	log.Tracef("success getting marked appointments by doctor UUID %v", doctor_uuid)
+
+	return appointments, nil
 }

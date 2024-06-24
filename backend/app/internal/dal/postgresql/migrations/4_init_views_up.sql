@@ -15,6 +15,7 @@ CREATE OR REPLACE VIEW appointment_details_view AS
 	FROM doctor 
 	INNER JOIN appointment ON doctor.id = appointment.doctor_id
 	
--- SELECT * FROM review_view;
--- SELECT * FROM available_appointment_view;
--- SELECT * FROM appointment ORDER BY id ASC;
+CREATE OR REPLACE VIEW doctor_appointments_view AS
+	SELECT appointment.id, doctor.user_id AS doctor_uuid, concat(name, ' ', surname) AS patient_name, begins_at, ends_at, status FROM appointment 
+	INNER JOIN doctor ON appointment.doctor_id = doctor.id
+	INNER JOIN users ON appointment.patient_uuid = users.id

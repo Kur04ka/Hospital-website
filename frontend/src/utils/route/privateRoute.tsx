@@ -1,50 +1,49 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { instance } from "../axios";
+import { Box } from "@mui/material";
 import CircularProgress from '@mui/material/CircularProgress';
 import React, { useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { checkAuth } from "../../utils/auth";
 
-const PrivateRoute = () => {
+const PrivateRoute = ({ roleRoute }: any) => {
     const [auth, setAuth] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [role, setRole] = useState<string | null>(null);
 
     useEffect(() => {
-        const checkAuth = async () => {
+        const fetchAuthStatus = async () => {
             try {
-                const response = await instance.get('/user/ping-token', {
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-                    }
-                });
-
-                if (response.status === 401) {
-                    localStorage.removeItem("jwt");
-                    setAuth(false);
-                } else {
-                    setAuth(true);
-                }
+                const { auth: isAuthenticated, role: userRole } = await checkAuth();
+                setAuth(isAuthenticated);
+                setRole(userRole);
             } catch (error) {
-                localStorage.removeItem("jwt");
+                console.error('Error checking authentication:', error);
                 setAuth(false);
+                setRole(null);
             } finally {
                 setLoading(false);
             }
         };
 
-        checkAuth();
+        fetchAuthStatus();
     }, []);
 
     if (loading) {
         return (
             <Box display={'flex'} flexDirection={'column'} height={'100vh'} textAlign={'center'} alignItems={'center'} justifyContent={'center'} gap={'3rem'}>
-                <CircularProgress size={100}></CircularProgress>
+                <CircularProgress size={100} />
             </Box>
-        )
+        );
     }
 
-    return (
-        auth ? <Outlet /> : <Navigate to="/login" />
-    );
-}
+    if (!auth) {
+        return <Navigate to="/login" />;
+    }
+
+    if (role === roleRoute) {
+        return <Outlet />;
+    } else {
+        return <Navigate to="/unauthorized" />;
+    }
+};
 
 export default PrivateRoute;

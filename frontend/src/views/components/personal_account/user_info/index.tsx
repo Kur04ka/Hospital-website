@@ -6,11 +6,11 @@ import styles from './user_info.module.css';
 
 
 const UserInformation = () => {
-  const { user, fetchUser } = useUserStore(); // Получаем пользователя и функцию загрузки из хранилища
+  const { user, fetchUser } = useUserStore();
 
   useEffect(() => {
-    fetchUser(); // Вызываем функцию загрузки при монтировании компонента
-  }, []);
+    fetchUser(); 
+  }, [fetchUser]);
 
   return (
     <Box display={'flex'} flexDirection={'column'} gap={'1rem'} padding={'3rem'} border={'3px solid rgba(238, 243, 248, 1)'} sx={{borderRadius: '3rem'}}>

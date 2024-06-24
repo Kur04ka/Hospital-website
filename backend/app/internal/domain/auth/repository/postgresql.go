@@ -384,21 +384,27 @@ func (repo *authRepository) UserVerified(email string) (bool, error) {
 	return isVerified, nil
 }
 
-func (repo *authRepository) GenerateToken(email, password string) (string, error) {
+func (repo *authRepository) GenerateToken(email, password string) (signedToken string, role string, err error) {
 	user, err := repo.GetUser(email, generatePasswordHash(password))
 	if err != nil {
 		log.WithError(err).Error("error getting user")
-		return "", err
+		return "", "", err
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, &jwt.MapClaims{
-		"exp":   time.Now().Add(tokenTTL).Unix(),
-		"iat":   time.Now().Unix(),
+		"exp":  time.Now().Add(tokenTTL).Unix(),
+		"iat":  time.Now().Unix(),
 		"role": user.Role,
-		"ueid":  user.Id,
+		"ueid": user.Id,
 	})
 
-	return token.SignedString([]byte(signingkey))
+	signedToken, err = token.SignedString([]byte(signingkey))
+	if err != nil {
+		log.WithError(err).Error("error signing token")
+		return "", "", err
+	}
+
+	return signedToken, user.Role, nil
 }
 
 func (repo *authRepository) IsUserPasswordCorrect(email, password string) (bool, error) {

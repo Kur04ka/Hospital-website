@@ -18,6 +18,6 @@ type Repository interface {
 	UpdateUserVerificationStatus(verificationEmail string, verificationStatus bool) error
 	VerificationDataExists(email string) (bool, error)
 
-	GenerateToken(email, password string) (string, error)
+	GenerateToken(email, password string) (signedToken string, role string, err error)
 	IsUserPasswordCorrect(email, password string) (bool, error)
 }

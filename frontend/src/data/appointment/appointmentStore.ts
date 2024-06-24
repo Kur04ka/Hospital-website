@@ -3,9 +3,11 @@ import { instance } from '../../utils/axios';
 
 export interface Appointment {
     appointment_id: number;
+    patient_name: string;
     doctor_name: string;
     begins_at: string;
     ends_at: string;
+    status: string;
 }
 
 interface AppointmentStore {
@@ -16,11 +18,69 @@ interface AppointmentStore {
     updateCurrentAppointment: (old_appointment_id: number, new_appointment_id: number) => Promise<void>;
     removeCurrentAppointment: (appointment_id: number) => Promise<void>;
     createAppointment: (appointment_id: number) => Promise<void>;
+
+    doctorUnmarkedAppointments: Appointment[];
+    doctorMarkedAppointments: Appointment[];
+    fetchDoctorUnmarkedAppointments: () => Promise<void>;
+    fetchDoctorMarkedAppointments: () => Promise<void>;
+    updateUnmarkedAppointment: (id: number, status: string) => Promise<void>;
 }
 
 export const useAppointmentStore = create<AppointmentStore>((set, get) => ({
     currentAppointments: [],
     archiveAppointments: [],
+    doctorUnmarkedAppointments: [],
+    doctorMarkedAppointments: [],
+
+    fetchDoctorUnmarkedAppointments: async () => {
+        try {
+            const response = await instance.get<Appointment[]>('/appointments/get-unmarked-appointments-by-uuid', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                }
+            });
+            set({ doctorUnmarkedAppointments: response.data });
+        } catch (error) {
+            console.error('Error fetching unmarked appointments:', error);
+        }
+    },
+
+    fetchDoctorMarkedAppointments: async () => {
+        try {
+            const response = await instance.get<Appointment[]>('/appointments/get-marked-appointments-by-uuid', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                }
+            });
+            set({ doctorMarkedAppointments: response.data });
+        } catch (error) {
+            console.error('Error fetching marked appointments:', error);
+        }
+    },
+
+    updateUnmarkedAppointment: async (id: number, status: string) => {
+        try {
+            await instance.patch<Appointment>(
+                `/appointments/change-appointment-status?id=${id}&status=${status}`,
+                {},
+                {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                    }
+                }
+            );
+            
+            const { doctorUnmarkedAppointments } = get();
+            const updatedDoctorUnmarkedAppointments = Array.isArray(doctorUnmarkedAppointments) ? doctorUnmarkedAppointments : [];
+    
+            set({
+                doctorUnmarkedAppointments: updatedDoctorUnmarkedAppointments.filter((appointment) => appointment.appointment_id !== id),
+            });
+        } catch (error) {
+            console.error('Error updating appointment status:', error);
+        }
+    },
+    
 
     createAppointment: async (appointment_id: number) => {
         try {

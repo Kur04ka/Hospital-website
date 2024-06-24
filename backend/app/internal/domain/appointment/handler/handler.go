@@ -22,13 +22,15 @@ func NewAppointmentHandler(repository repository.Repository) handlers.Handler {
 }
 
 func (h *handler) Register(router *httprouter.Router) {
-	router.HandlerFunc(http.MethodGet, "/doctors/doctor-schedule/:doctor-name", h.getScheduleByDoctorName)
+	router.HandlerFunc(http.MethodGet, "/appointments/doctor-schedule/:doctor-name", h.getScheduleByDoctorName)
 	router.HandlerFunc(http.MethodPost, "/appointments/create-new-appointment/:appointmentID", middleware.AuthCheck(h.makeNewAppointment, "patient"))
 	router.HandlerFunc(http.MethodGet, "/appointments/current-appointments-by-uuid", middleware.AuthCheck(h.getAllCurrentAppointments, "patient"))
 	router.HandlerFunc(http.MethodGet, "/appointments/archieve-appointments-by-uuid", middleware.AuthCheck(h.getAllArchieveAppointments, "patient"))
 	router.HandlerFunc(http.MethodDelete, "/appointments/delete-appointment/:appointmentID", middleware.AuthCheck(h.deleteAppointment, "patient"))
 	router.HandlerFunc(http.MethodPatch, "/appointments/change-appointment", middleware.AuthCheck(h.patchAppointment, "patient"))
 	router.HandlerFunc(http.MethodPatch, "/appointments/change-appointment-status", middleware.AuthCheck(h.changeStatus, "doctor"))
+	router.HandlerFunc(http.MethodGet, "/appointments/get-unmarked-appointments-by-uuid", middleware.AuthCheck(h.getUnmarkedAppointments, "doctor"))
+	router.HandlerFunc(http.MethodGet, "/appointments/get-marked-appointments-by-uuid", middleware.AuthCheck(h.getMarkedAppointments, "doctor"))
 }
 
 func (h *handler) changeStatus(w http.ResponseWriter, r *http.Request) {
@@ -203,5 +205,43 @@ func (h *handler) patchAppointment(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 
 	w.WriteHeader(http.StatusAccepted)
+}
+
+func (h *handler) getUnmarkedAppointments(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	doctor_uuid := r.Header.Get("user_id")
+
+	appointments, err := h.repository.GetUnmarkedDoctorAppointments(doctor_uuid)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	data, err := json.Marshal(appointments)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.Write(data)
+}
+
+func (h *handler) getMarkedAppointments(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	doctor_uuid := r.Header.Get("user_id")
+
+	appointments, err := h.repository.GetMarkedDoctorAppointments(doctor_uuid)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	data, err := json.Marshal(appointments)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.Write(data)
 }
 

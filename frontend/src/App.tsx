@@ -8,20 +8,24 @@ import Register from './views/components/auth/register';
 import SuccessEmailVerification from './views/components/auth/successEmailVerification';
 import PageNotFound from './views/components/page_not_found'
 import PersonalAccount from './views/components/personal_account';
+import DoctorAccount from './views/components/doctorAccount';
 
 function App() {
   return (
     <>
       <Routes>
-        <Route element={<PrivateRoute />}>
+        <Route element={<PrivateRoute roleRoute="patient" />}>
           <Route path="/personal-account" element={<PersonalAccount />} />
+        </Route>
+        <Route element={<PrivateRoute roleRoute="doctor" />}>
+          <Route path="/doctor-account" element={<DoctorAccount />} />
         </Route>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/page-not-found" element={<PageNotFound />} />
         <Route path="/verify-email" element={<EmailVerification />} />
         <Route path="/verify-email-success" element={<SuccessEmailVerification />} />
-        <Route path="/page-not-found" element={<PageNotFound />} />
       </Routes>
     </>
   );

@@ -6,7 +6,7 @@ const NotFound = () => {
     return (
         <div className={styles.container}>
             <div>
-                <img src="/images/page-not-found.png" height={700} />
+                <img src='/images/page-not-found.png' alt='page-not-found.png' height={700} />
             </div>
             <div>
                 <div>

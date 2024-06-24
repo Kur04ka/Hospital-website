@@ -25,7 +25,7 @@ const DoctorScheduleCalendar: React.FC<DoctorScheduleCalendarProps> = ({ doctorN
     useEffect(() => {
         const fetchAppointments = async () => {
             try {
-                const response = await instance.get(`/doctors/doctor-schedule/${doctorName}`);
+                const response = await instance.get(`/appointments/doctor-schedule/${doctorName}`);
                 setAppointments(response.data);
             } catch (error) {
                 console.error('Error fetching appointments:', error);

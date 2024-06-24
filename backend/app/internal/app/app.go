@@ -124,13 +124,13 @@ func (a *App) startHTTP() error {
 		"Debug":              a.cfg.HTTP.CORS.Debug,
 	})
 	c := cors.New(cors.Options{
-		AllowedMethods:     []string{http.MethodGet, http.MethodPost, http.MethodPatch, http.MethodDelete},
-		AllowedOrigins:     []string{"http://localhost:3000"},
-		AllowCredentials:   true,
-		AllowedHeaders:     []string{"authorization", "content-type"},
-		OptionsPassthrough: true,
-		ExposedHeaders:     []string{},
-		Debug:              true,
+		AllowedMethods:     a.cfg.HTTP.CORS.AllowedMethods,
+		AllowedOrigins:     a.cfg.HTTP.CORS.AllowedOrigins,
+		AllowCredentials:   a.cfg.HTTP.CORS.AllowCredentials,
+		AllowedHeaders:     a.cfg.HTTP.CORS.AllowedHeaders,
+		OptionsPassthrough: a.cfg.HTTP.CORS.OptionsPassthrough,
+		ExposedHeaders:     a.cfg.HTTP.CORS.ExposedHeaders,
+		Debug:              a.cfg.HTTP.CORS.Debug,
 	})
 
 	handler := c.Handler(a.router)

@@ -16,7 +16,6 @@ const RegisterPage: React.FC = (): JSX.Element => {
   const [password, setPassword] = useState('')
   const [isPasswordMatch, setIsPasswordMatch] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
-  const [repeatPassword, setRepeatPassword] = useState('')
   const [name, setName] = useState('')
   const [surname, setSurname] = useState('')
   const [birthDate, setBirthDate] = React.useState<Dayjs | null>()
@@ -38,7 +37,6 @@ const RegisterPage: React.FC = (): JSX.Element => {
 
   const handleRepeatPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newRepeatPassword = e.target.value;
-    setRepeatPassword(newRepeatPassword);
     setIsPasswordMatch(newRepeatPassword === password);
   };
 

@@ -14,4 +14,5 @@ const (
 	ReviewView               = scheme + ".review_view"
 	AvailableAppointmentView = scheme + ".available_appointment_view"
 	AppointmentDetailsView   = scheme + ".appointment_details_view"
+	DoctorAppointmentsView   = scheme + ".doctor_appointments_view"
 )

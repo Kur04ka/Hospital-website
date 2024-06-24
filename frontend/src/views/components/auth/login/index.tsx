@@ -12,22 +12,25 @@ const LoginPage: React.FC = (): JSX.Element => {
 
   const navigate = useNavigate()
 
+  const userData = {
+    email,
+    password,
+  }
+  
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
 
     try {
-
-      const userData = {
-        email,
-        password,
-      }
-      const response = await instance.post('auth/sign-in', userData)
-      const token = response.data
-
-      localStorage.setItem('jwt', token)
-      
-      navigate('/')
-
+      const response = await instance.post('auth/sign-in', userData);
+      const { jwt, role } = response.data;
+    
+      // TODO: Сделать через Cookies
+      localStorage.setItem('jwt', jwt);
+      // Если необходимо сохранить роль
+      localStorage.setItem('role', role);
+    
+      // Навигация на другую страницу
+      navigate('/');
     } catch (e) {
       return e
     }

@@ -6,16 +6,16 @@ is_dev : false
 http : 
   ip : 0.0.0.0
   port : 8080
-  read_timeout : 
-  write_timeout : 
+  read_timeout : 5s
+  write_timeout : 10s
   cors : 
-    allowed_methods : 
-    allowed_origins :
-    allow_credentials :
-    allowed_headers :
-    options_pass_through :
-    exposed_headers :
-    debug :
+    allowed_methods : ["GET", "POST", PATCH, DELETE]
+    allowed_origins : ["http://localhost:3000"]
+    allow_credentials : true
+    allowed_headers : ["authorization", "content-type"]
+    options_pass_through : true
+    exposed_headers : []
+    debug : true
 
 app_config :
   log_level : trace
