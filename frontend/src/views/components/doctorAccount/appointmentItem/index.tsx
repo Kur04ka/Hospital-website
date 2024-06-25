@@ -4,6 +4,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { formatDate, formatTime } from '../../../../utils/date_parser';
 import { Appointment, useAppointmentStore } from '../../../../data/appointment/appointmentStore'
+import { dateCalendarClasses } from '@mui/x-date-pickers';
 
 interface AppointmentItemProps {
     appointment: Appointment;
@@ -40,8 +41,16 @@ const AppointmentItem: React.FC<AppointmentItemProps> = ({ appointment, isMarked
                     <DoneIcon fontSize='large' style={{ color: 'rgba(0, 255, 0, 1)' }} />
             ) : (
                 <Box display={'flex'} gap={'2rem'}>
-                    <IconButton onClick={() => handleNoShowClick(appointment.appointment_id)}><CancelIcon fontSize='large' style={{ color: 'rgba(221, 101, 101, 1)' }} /></IconButton>
-                    <IconButton onClick={() => handleCompletedClick(appointment.appointment_id)}><DoneIcon fontSize='large' style={{ color: 'rgba(0, 255, 0, 1)' }} /></IconButton>
+                    <IconButton
+                        onClick={() => handleNoShowClick(appointment.appointment_id)}
+                        disabled={new Date(appointment.begins_at) >= new Date()}>
+                        <CancelIcon fontSize='large' style={{ color: 'rgba(221, 101, 101, 1)' }} />
+                    </IconButton>
+                    <IconButton
+                        onClick={() => handleCompletedClick(appointment.appointment_id)}
+                        disabled={new Date(appointment.begins_at) >= new Date()}>
+                        <DoneIcon fontSize='large' style={{ color: 'rgba(0, 255, 0, 1)' }} />
+                    </IconButton>
                 </Box>
             )}
         </Box>
