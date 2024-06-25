@@ -33,7 +33,6 @@ func main() {
 	log.Info("getting config")
 	cfg := config.GetConfig()
 	log.Info("success getting config")
-	log.Debugf("config credentials: %v", *cfg)
 
 	app, err := app.NewApp(cfg)
 	if err != nil {
