@@ -11,7 +11,7 @@ CREATE OR REPLACE VIEW available_appointment_view AS
 	WHERE is_available = true;
 	
 CREATE OR REPLACE VIEW appointment_details_view AS
-	SELECT appointment.id, patient_uuid, fullname AS doctor_name, begins_at, ends_at, is_available
+	SELECT appointment.id, patient_uuid, fullname AS doctor_name, begins_at, ends_at, is_available, status
 	FROM doctor 
 	INNER JOIN appointment ON doctor.id = appointment.doctor_id
 	

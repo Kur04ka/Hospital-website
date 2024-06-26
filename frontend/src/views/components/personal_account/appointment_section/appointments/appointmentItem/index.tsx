@@ -3,6 +3,8 @@ import { Box, Typography, IconButton } from '@mui/material';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CancelIcon from '@mui/icons-material/Cancel';
+import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import { formatDate, formatTime } from '../../../../../../utils/date_parser';
 import { Appointment } from '../../../../../../data/appointment/appointmentStore'
 
@@ -25,11 +27,21 @@ const AppointmentItem: React.FC<AppointmentItemProps> = ({ appointment, handleEd
             {formatTime(appointment.begins_at)}
         </Typography>
         {isArchive ? (
-            <CheckCircleOutlineIcon sx={{ color: 'green' }} fontSize={'large'} />
+            <>
+                {appointment.status === 'completed' && (
+                    <CheckCircleOutlineIcon sx={{ color: 'green' }} fontSize={'large'} />
+                )}
+                {appointment.status === 'no show' && (
+                    <CancelIcon sx={{ color: 'red' }} fontSize={'large'} />
+                )}
+                {appointment.status === 'pending' && (
+                    <HourglassBottomIcon sx={{ color: 'gray' }} fontSize={'large'} />
+                )}
+            </>
         ) : (
             <Box display={'flex'} gap={'2rem'}>
-                <IconButton onClick={() => handleEditClick && handleEditClick(appointment.appointment_id, appointment.doctor_name)}><EditIcon fontSize='large' /></IconButton>
-                <IconButton onClick={() => handleDeleteClick && handleDeleteClick(appointment.appointment_id)}><DeleteIcon fontSize='large' style={{ color: 'rgba(221, 101, 101, 1)' }} /></IconButton>
+                <IconButton onClick={() => handleEditClick && handleEditClick(appointment.appointment_id, appointment.doctor_name)}><EditIcon fontSize='large' style={{ color: 'gray' }} /></IconButton>
+                <IconButton onClick={() => handleDeleteClick && handleDeleteClick(appointment.appointment_id)}><DeleteIcon fontSize='large' style={{ color: 'red' }} /></IconButton>
             </Box>
         )}
     </Box>

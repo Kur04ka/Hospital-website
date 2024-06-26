@@ -10,6 +10,8 @@ export interface Appointment {
     status: string;
 }
 
+// TODO: добавить фильтрацию при добавлении записей
+
 interface AppointmentStore {
     currentAppointments: Appointment[];
     archiveAppointments: Appointment[];

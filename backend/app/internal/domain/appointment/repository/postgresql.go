@@ -173,6 +173,7 @@ func (repo *appointmentRepository) GetAllArchieveAppointmentsByUUID(uuid string)
 			"doctor_name",
 			"begins_at",
 			"ends_at",
+			"status",
 		).
 		From(postgresql.AppointmentDetailsView).
 		Where(sq.Eq{"patient_uuid": uuid}).
@@ -199,6 +200,7 @@ func (repo *appointmentRepository) GetAllArchieveAppointmentsByUUID(uuid string)
 			&appointment.DoctorName,
 			&appointment.BeginsAt,
 			&appointment.EndsAt,
+			&appointment.Status,
 		); err != nil {
 			err = psql.ErrScan(psql.ParsePgError(err))
 			log.Trace("error scan row")
