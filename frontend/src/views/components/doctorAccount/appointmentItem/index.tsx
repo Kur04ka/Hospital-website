@@ -4,7 +4,6 @@ import DoneIcon from '@mui/icons-material/Done';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { formatDate, formatTime } from '../../../../utils/date_parser';
 import { Appointment, useAppointmentStore } from '../../../../data/appointment/appointmentStore'
-import { dateCalendarClasses } from '@mui/x-date-pickers';
 
 interface AppointmentItemProps {
     appointment: Appointment;

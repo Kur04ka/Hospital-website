@@ -55,6 +55,7 @@ const DoctorScheduleCalendar: React.FC<DoctorScheduleCalendarProps> = ({ doctorN
         onAppointmentSelect(appointmentId);
     };
 
+    // TODO: Наладить отображение записей
     return (
         <Box display={'flex'} justifyContent={'center'} flexDirection={'column'} alignItems={'center'} gap={'2rem'}>
             <Calendar
@@ -64,26 +65,21 @@ const DoctorScheduleCalendar: React.FC<DoctorScheduleCalendarProps> = ({ doctorN
             {selectedDate && (
                 <Box display={'flex'} flexDirection={'column'} gap={'1rem'}>
                     <Typography variant="h5" style={{ color: 'rgba(8, 44, 77, 1)', fontFamily: 'Gilroy medium', textAlign: 'center' }}>Доступное время:</Typography>
-                    <Grid container rowGap={'1rem'} columnGap={'4rem'}>
+                    <Grid container spacing={2}>
                         {appointments
                             .filter(appointment =>
                                 new Date(appointment.begins_at).toDateString() === selectedDate.toDateString()
                             )
-                            .map(appointment => (
-                                <Grid
-                                    item
-                                    xs={5}
-                                >
+                            .map((appointment, index) => (
+                                <Grid item xs={6} key={appointment.appointment_id} width={200}>
                                     <ListItemButton
-                                        key={appointment.appointment_id}
                                         className={styles.list_item}
                                         onClick={() => handleAppointmentClick(appointment.appointment_id)}
                                     >
                                         <ListItemText primary={`${formatTime(appointment.begins_at)}`} />
                                     </ListItemButton>
                                 </Grid>
-                            ))
-                        }
+                            ))}
                     </Grid>
                 </Box>
             )}

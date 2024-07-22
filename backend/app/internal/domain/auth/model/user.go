@@ -13,7 +13,7 @@ type User struct {
 	PhoneNumber string    `json:"phone_number"`
 	Created_at  time.Time `json:"created_at"`
 	IsVerified  bool      `json:"is_verified"`
-	Role        string      `json:"role"`
+	Role        string    `json:"role"`
 }
 
 type UserDetails struct {
